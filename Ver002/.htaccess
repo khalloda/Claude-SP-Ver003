@@ -1,0 +1,203 @@
+# Apache configuration for Spare Parts Management System
+# Provides URL rewriting, security headers, and performance optimizations
+
+# Enable URL Rewriting
+RewriteEngine On
+
+# Block access to sensitive files and directories
+RewriteCond %{THE_REQUEST} /\.
+RewriteRule ^(.*)$ - [F,L]
+
+# Block access to configuration files
+<FilesMatch "\.(env|ini|log|sql|md|txt|yml|yaml|json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Block access to PHP files in specific directories
+RewriteCond %{REQUEST_URI} ^/(app|config|lang|sql|vendor|storage|tests)/
+RewriteRule ^(.*)$ - [F,L]
+
+# Maintenance mode - uncomment to enable
+# RewriteCond %{REQUEST_URI} !^/maintenance
+# RewriteCond %{REMOTE_ADDR} !^127\.0\.0\.1$
+# RewriteRule ^(.*)$ /maintenance [R=503,L]
+
+# Force HTTPS in production (uncomment for production)
+# RewriteCond %{HTTPS} off
+# RewriteCond %{HTTP:X-Forwarded-Proto} !https
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# Remove trailing slash
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)/$ /$1 [R=301,L]
+
+# Handle API routes
+RewriteCond %{REQUEST_URI} ^/api/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ public/index.php [QSA,L]
+
+# Handle static assets
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^assets/(.*)$ public/assets/$1 [L]
+
+# Main application routing
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/index.php [QSA,L]
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Prevent MIME type sniffing
+    Header always set X-Content-Type-Options nosniff
+    
+    # Enable XSS protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Prevent clickjacking
+    Header always set X-Frame-Options SAMEORIGIN
+    
+    # Strict Transport Security (uncomment for production with HTTPS)
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # Content Security Policy (adjust as needed)
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self'"
+    
+    # Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Feature Policy
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    
+    # Remove Server header for security
+    Header unset Server
+    
+    # Remove X-Powered-By header
+    Header unset X-Powered-By
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    # Enable compression for text files
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# Browser Caching
+<IfModule mod_expires.c>
+    ExpiresActive on
+    
+    # Images
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # HTML
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # JSON and XML
+    ExpiresByType application/json "access plus 1 hour"
+    ExpiresByType text/xml "access plus 1 hour"
+    ExpiresByType application/xml "access plus 1 hour"
+</IfModule>
+
+# Cache-Control Headers
+<IfModule mod_headers.c>
+    # CSS and JS files
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=2628000, public"
+    </FilesMatch>
+    
+    # Image files
+    <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg)$">
+        Header set Cache-Control "max-age=2628000, public"
+    </FilesMatch>
+    
+    # Font files
+    <FilesMatch "\.(woff|woff2|ttf|eot)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+    
+    # HTML files
+    <FilesMatch "\.html$">
+        Header set Cache-Control "max-age=3600, public, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# Error Documents
+ErrorDocument 404 /errors/404
+ErrorDocument 403 /errors/403
+ErrorDocument 500 /errors/500
+ErrorDocument 503 /errors/maintenance
+
+# File size limits
+<IfModule mod_php.c>
+    php_value upload_max_filesize 32M
+    php_value post_max_size 32M
+    php_value max_execution_time 300
+    php_value max_input_vars 3000
+</IfModule>
+
+# Directory Protection
+Options -Indexes
+Options -ExecCGI
+
+# Prevent access to backup files
+<FilesMatch "^.*(\.bak|\.config|\.sql|\.fla|\.psd|\.ini|\.log|\.sh|\.inc|\.swp|\.dist)$">
+    Order allow,deny
+    Deny from all
+    Satisfy All
+</FilesMatch>
+
+# Rate limiting (requires mod_evasive)
+<IfModule mod_evasive24.c>
+    DOSHashTableSize    3097
+    DOSPageCount        2
+    DOSPageInterval     1
+    DOSSiteCount        50
+    DOSSiteInterval     1
+    DOSBlockingPeriod   600
+</IfModule>
+
+# IP-based access control (uncomment and modify as needed)
+# <RequireAll>
+#     Require all granted
+#     Require not ip 192.168.1.1
+# </RequireAll>
+
+# Development environment detection
+<IfModule mod_setenvif.c>
+    SetEnvIf Host "^localhost" DEVELOPMENT
+    SetEnvIf Host "\.local$" DEVELOPMENT
+    SetEnvIf Host "\.dev$" DEVELOPMENT
+</IfModule>
+
+# Enable detailed error reporting in development
+<IfModule mod_php.c>
+    php_value_if_env DEVELOPMENT display_errors 1
+    php_value_if_env DEVELOPMENT error_reporting "E_ALL"
+</IfModule>

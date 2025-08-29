@@ -1,0 +1,401 @@
+/* 
+ * File: public/assets/css/rtl.css
+ * Purpose: RTL (Right-to-Left) language support styles
+ * Dependencies: app.css, Bootstrap RTL
+ * Notes: Arabic, Hebrew, and other RTL language styling
+ */
+
+/* RTL body modifications */
+.rtl {
+    direction: rtl;
+    text-align: right;
+}
+
+.rtl .text-left {
+    text-align: right !important;
+}
+
+.rtl .text-right {
+    text-align: left !important;
+}
+
+/* Navigation adjustments */
+.rtl .navbar-brand {
+    margin-right: 0;
+    margin-left: 1rem;
+}
+
+.rtl .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 1rem;
+}
+
+.rtl .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+.rtl .dropdown-toggle::after {
+    margin-left: 0;
+    margin-right: 0.255em;
+}
+
+/* Flash messages positioning */
+.rtl .flash-messages {
+    right: auto;
+    left: 20px;
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.rtl .flash-messages .alert {
+    animation: slideInLeft 0.5s ease-out;
+}
+
+/* Form adjustments */
+.rtl .form-check {
+    padding-right: 1.25em;
+    padding-left: 0;
+}
+
+.rtl .form-check-input {
+    margin-right: -1.25em;
+    margin-left: 0;
+}
+
+.rtl .input-group-text {
+    border-right: 1px solid var(--border-color);
+    border-left: 0;
+}
+
+.rtl .input-group > .form-control:not(:last-child),
+.rtl .input-group > .form-select:not(:last-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+
+.rtl .input-group > .form-control:not(:first-child),
+.rtl .input-group > .form-select:not(:first-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+}
+
+/* Table adjustments */
+.rtl .table th,
+.rtl .table td {
+    text-align: right;
+}
+
+.rtl .table th:first-child,
+.rtl .table td:first-child {
+    padding-right: 16px;
+    padding-left: 8px;
+}
+
+.rtl .table th:last-child,
+.rtl .table td:last-child {
+    padding-left: 16px;
+    padding-right: 8px;
+}
+
+/* Badge and icon adjustments */
+.rtl .badge {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+.rtl .fas,
+.rtl .far,
+.rtl .fab {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+.rtl .me-1, .rtl .me-2, .rtl .me-3 {
+    margin-left: inherit;
+    margin-right: 0;
+}
+
+.rtl .ms-1, .rtl .ms-2, .rtl .ms-3 {
+    margin-right: inherit;
+    margin-left: 0;
+}
+
+/* Dropdown hover effects */
+.rtl .dropdown-item:hover {
+    transform: translateX(-4px);
+}
+
+/* Button group adjustments */
+.rtl .btn-group > .btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.rtl .btn-group > .btn:nth-child(n+3),
+.rtl .btn-group > :not(.btn-check) + .btn,
+.rtl .btn-group > .btn-group:not(:first-child) > .btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Pagination adjustments */
+.rtl .page-link {
+    margin-right: -1px;
+    margin-left: 0;
+}
+
+.rtl .page-item:first-child .page-link {
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.rtl .page-item:last-child .page-link {
+    border-top-left-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Stats card icon positioning */
+.rtl .stats-icon {
+    right: auto;
+    left: 24px;
+}
+
+/* Status indicators */
+.rtl .status-indicator {
+    margin-right: 0;
+    margin-left: 6px;
+}
+
+/* Progress bar adjustments */
+.rtl .progress {
+    background-color: var(--bg-secondary);
+}
+
+.rtl .progress-bar {
+    background-color: var(--primary-color);
+    direction: ltr;
+}
+
+/* Breadcrumb adjustments */
+.rtl .breadcrumb-item + .breadcrumb-item::before {
+    content: "<";
+    padding-right: 0;
+    padding-left: 0.5rem;
+}
+
+/* Modal adjustments */
+.rtl .modal-header .btn-close {
+    margin-right: auto;
+    margin-left: -0.5rem;
+}
+
+/* Alert adjustments */
+.rtl .alert-dismissible .btn-close {
+    left: 0;
+    right: auto;
+    padding-right: 0.75rem;
+    padding-left: 1.25rem;
+}
+
+/* List group adjustments */
+.rtl .list-group-item {
+    text-align: right;
+}
+
+/* Card adjustments */
+.rtl .card-header-tabs {
+    margin-left: -0.5rem;
+    margin-right: 0;
+    border-bottom: 0;
+}
+
+.rtl .card-header-pills {
+    margin-left: -0.5rem;
+    margin-right: 0;
+}
+
+/* Carousel adjustments */
+.rtl .carousel-control-prev {
+    right: 0;
+    left: auto;
+}
+
+.rtl .carousel-control-next {
+    left: 0;
+    right: auto;
+}
+
+.rtl .carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.rtl .carousel-control-next-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='m4.646 1.646.708.708L10.707 8l-5.353 5.646-.708-.708L10.293 8 4.646 1.646z'/%3e%3c/svg%3e");
+}
+
+/* Offcanvas adjustments */
+.rtl .offcanvas-start {
+    right: 0;
+    left: auto;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: 0;
+    transform: translateX(100%);
+}
+
+.rtl .offcanvas-end {
+    left: 0;
+    right: auto;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 0;
+    transform: translateX(-100%);
+}
+
+/* Toast adjustments */
+.rtl .toast-header .btn-close {
+    margin-left: auto;
+    margin-right: -0.375rem;
+}
+
+/* Tooltip adjustments */
+.rtl .bs-tooltip-start .tooltip-arrow {
+    right: 0;
+    left: auto;
+}
+
+.rtl .bs-tooltip-end .tooltip-arrow {
+    left: 0;
+    right: auto;
+}
+
+/* Popover adjustments */
+.rtl .bs-popover-start > .popover-arrow {
+    right: calc(-1 * (0.5rem + 1px));
+    left: auto;
+}
+
+.rtl .bs-popover-end > .popover-arrow {
+    left: calc(-1 * (0.5rem + 1px));
+    right: auto;
+}
+
+/* Data table adjustments */
+.rtl .dataTables_length {
+    float: right;
+}
+
+.rtl .dataTables_filter {
+    float: left;
+}
+
+.rtl .dataTables_info {
+    float: right;
+}
+
+.rtl .dataTables_paginate {
+    float: left;
+}
+
+/* Arabic/Persian number styling */
+.rtl .arabic-numbers {
+    font-family: 'Tahoma', sans-serif;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Text input for Arabic */
+.rtl input[type="text"],
+.rtl input[type="email"],
+.rtl input[type="password"],
+.rtl textarea {
+    text-align: right;
+}
+
+.rtl input[type="number"] {
+    text-align: left; /* Numbers should stay LTR */
+    direction: ltr;
+}
+
+/* Custom RTL animations */
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.rtl .slide-in-right {
+    animation: slideInFromRight 0.3s ease-out;
+}
+
+.rtl .slide-out-right {
+    animation: slideOutToRight 0.3s ease-in;
+}
+
+/* Print adjustments for RTL */
+@media print {
+    .rtl {
+        direction: rtl;
+    }
+    
+    .rtl .table th,
+    .rtl .table td {
+        text-align: right;
+    }
+}
+
+/* High contrast RTL adjustments */
+@media (prefers-contrast: high) {
+    .rtl .dropdown-item:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+}
+
+/* Mobile RTL adjustments */
+@media (max-width: 768px) {
+    .rtl .flash-messages {
+        left: 10px;
+        right: auto;
+    }
+    
+    .rtl .navbar-collapse {
+        text-align: right;
+    }
+    
+    .rtl .navbar-nav {
+        margin-right: auto;
+        margin-left: 0;
+    }
+}

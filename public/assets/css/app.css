@@ -1,0 +1,685 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f6f9;
+}
+
+/* RTL Support */
+[dir="rtl"] {
+    text-align: right;
+}
+
+[dir="rtl"] .navbar-brand {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+[dir="rtl"] .nav-link {
+    padding-right: 0.5rem;
+    padding-left: 1rem;
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.main-content {
+    margin-top: 80px;
+    padding: 20px 0;
+}
+
+/* Navigation */
+.navbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 1rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+/* Dropdown Menus */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle::after {
+    content: ' ▼';
+    font-size: 0.8rem;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    min-width: 200px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 1000;
+    border: 1px solid #ddd;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #667eea;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+    border-bottom: none;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e1e5e9;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Tables */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.table th,
+.table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Grid System */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -0.5rem;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0.5rem;
+}
+
+.col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+    padding: 0.5rem;
+}
+
+.col-md-8 {
+    flex: 0 0 66.666667%;
+    max-width: 66.666667%;
+    padding: 0.5rem;
+}
+
+/* Alerts */
+.alert {
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Badges */
+.badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: white;
+}
+
+.badge-sent { background-color: #6c757d; }
+.badge-approved { background-color: #28a745; }
+.badge-rejected { background-color: #dc3545; }
+.badge-open { background-color: #007bff; }
+.badge-delivered { background-color: #28a745; }
+.badge-partial { background-color: #ffc107; color: #000; }
+.badge-paid { background-color: #28a745; }
+.badge-void { background-color: #6c757d; }
+.badge-success { background-color: #28a745; }
+.badge-danger { background-color: #dc3545; }
+
+/* Stock Indicators */
+.stock-indicator {
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    background-color: #28a745;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.stock-indicator.low-stock {
+    background-color: #dc3545;
+}
+
+/* Warehouse Location Rows */
+.warehouse-location-row {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+    margin-bottom: 1rem;
+}
+
+.warehouse-location-row label {
+    font-size: 0.875rem;
+    color: #495057;
+    margin-bottom: 0.25rem;
+}
+
+/* Login page */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 2rem;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-title {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.login-subtitle {
+    color: rgba(255,255,255,0.8);
+}
+
+/* Language switcher */
+.lang-switcher {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.lang-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    transition: background-color 0.3s;
+}
+
+.lang-link:hover,
+.lang-link.active {
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* Dashboard */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Pagination */
+.pagination-wrapper {
+    margin-top: 2rem;
+}
+
+.pagination-wrapper .btn {
+    margin: 0 0.25rem;
+}
+
+/* Add this CSS to your public/assets/css/app.css file - replace the existing mobile responsive section */
+
+/* Mobile Navigation Fixes */
+@media (max-width: 768px) {
+    /* Fix navbar height and layout */
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: auto;
+        min-height: 60px;
+        padding: 0.5rem 0;
+        z-index: 1000;
+    }
+    
+    .navbar-content {
+        flex-direction: column;
+        gap: 0;
+        align-items: stretch;
+    }
+    
+    .navbar-brand {
+        padding: 0.5rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    .navbar-nav {
+        flex-direction: column;
+        gap: 0;
+        width: 100%;
+        max-height: calc(100vh - 120px);
+        overflow-y: auto;
+    }
+    
+    /* Fix dropdown behavior on mobile */
+    .dropdown {
+        width: 100%;
+    }
+    
+    .dropdown > .nav-link {
+        width: 100%;
+        text-align: left;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Mobile dropdown toggle */
+    .dropdown-toggle::after {
+        content: '+';
+        font-size: 1.2rem;
+        transition: transform 0.3s;
+    }
+    
+    .dropdown.active .dropdown-toggle::after {
+        content: '−';
+        transform: rotate(180deg);
+    }
+    
+    /* Mobile dropdown menu */
+    .dropdown-menu {
+        position: static !important;
+        display: none;
+        box-shadow: none;
+        border: none;
+        background: rgba(255,255,255,0.1);
+        margin: 0;
+        border-radius: 0;
+        width: 100%;
+        backdrop-filter: blur(5px);
+    }
+    
+    .dropdown.active .dropdown-menu {
+        display: block !important;
+    }
+    
+    .dropdown-item {
+        color: rgba(255,255,255,0.9) !important;
+        padding: 0.75rem 2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        background: transparent;
+        transition: background-color 0.2s;
+    }
+    
+    .dropdown-item:hover {
+        background-color: rgba(255,255,255,0.1) !important;
+        color: white !important;
+    }
+    
+    .dropdown-header {
+        color: rgba(255,255,255,0.8) !important;
+        padding: 0.5rem 2rem;
+    }
+    
+    .dropdown-divider {
+        border-top: 1px solid rgba(255,255,255,0.2);
+        margin: 0.25rem 0;
+    }
+    
+    /* Language switcher on mobile */
+    .lang-switcher {
+        display: flex;
+        justify-content: center;
+        padding: 0.75rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .lang-switcher .lang-link {
+        margin: 0 0.5rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 20px;
+        min-width: 50px;
+        text-align: center;
+    }
+    
+    /* User dropdown specific mobile styles */
+    .user-dropdown {
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 0;
+        padding: 0.75rem 1rem;
+        justify-content: space-between;
+    }
+    
+    /* Main content adjustment */
+    .main-content {
+        margin-top: 250px; /* Adjust based on your mobile navbar height */
+        min-height: calc(100vh - 250px);
+    }
+    
+    /* Hide hover effects on mobile */
+    .dropdown:hover .dropdown-menu {
+        display: none !important;
+    }
+    
+    /* Currency modal mobile adjustments */
+    .currency-modal-content {
+        margin: 5% auto;
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+    
+    /* Dashboard stats mobile */
+    .dashboard-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /* Form responsiveness */
+    .col-md-6,
+    .col-md-4,
+    .col-md-8 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    /* Button groups on mobile */
+    .btn-group {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 0.25rem;
+        border-radius: 0.375rem !important;
+    }
+    
+    /* Action buttons mobile */
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+    }
+}
+
+/* Very small screens (phones in portrait) */
+@media (max-width: 480px) {
+    .main-content {
+        margin-top: 280px; /* More space for very small screens */
+        padding: 10px 0;
+    }
+    
+    .container {
+        padding: 0 10px;
+    }
+    
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    
+    .card {
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+    
+    .card-header {
+        padding: 1rem;
+    }
+    
+    .card-body {
+        padding: 1rem;
+    }
+}
+
+/* Landscape phones */
+@media (max-width: 768px) and (orientation: landscape) {
+    .main-content {
+        margin-top: 200px; /* Less space in landscape */
+    }
+    
+    .navbar-nav {
+        max-height: calc(100vh - 100px);
+    }
+}
+
+/* RTL Enhancements */
+[dir="rtl"] .dropdown-menu {
+    left: auto;
+    right: 0;
+}
+
+[dir="rtl"] .table th,
+[dir="rtl"] .table td {
+    text-align: right;
+}
+
+[dir="rtl"] .warehouse-location-row {
+    direction: rtl;
+}
