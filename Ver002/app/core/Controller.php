@@ -266,8 +266,7 @@ abstract class Controller
 
     protected function verifyCsrf(): bool
     {
-        $token = $this->input['csrf_token'] ?? '';
-        return verify_csrf_token($token);
+        return verify_csrf_token();
     }
 
     private function resolveViewPath(string $view): string

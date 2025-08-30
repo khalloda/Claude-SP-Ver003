@@ -35,7 +35,7 @@ ob_start();
                 </div>
 
                 <form method="POST" action="/login" id="login-form">
-                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token) ?>">
+                    <input type="hidden" name="_token" value="<?= htmlspecialchars($csrf_token) ?>">
                     
                     <!-- Email Field -->
                     <div class="mb-3">

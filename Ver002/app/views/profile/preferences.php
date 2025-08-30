@@ -24,7 +24,7 @@ startContent();
 
 <!-- Preferences Form -->
 <form id="preferencesForm" method="POST" action="/profile/update-preferences">
-    <?php csrf_token(); ?>
+    <?= csrf_field() ?>
     
     <div class="row">
         <!-- Left Column -->
