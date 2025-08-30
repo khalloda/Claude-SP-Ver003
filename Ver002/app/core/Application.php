@@ -81,9 +81,48 @@ class Application
             $this->addResourceRoutes($router, 'dropdowns', 'DropdownController');
             $this->addResourceRoutes($router, 'users', 'UserController');
             
-            // Profile
+            // Profile management
             $router->get('/profile', 'ProfileController@index');
-            $router->post('/profile', 'ProfileController@update', ['middleware' => ['csrf']]);
+            $router->get('/profile/edit', 'ProfileController@edit');
+            $router->post('/profile/update', 'ProfileController@update', ['middleware' => ['csrf']]);
+            $router->get('/profile/change-password', 'ProfileController@changePassword');
+            $router->post('/profile/update-password', 'ProfileController@updatePassword', ['middleware' => ['csrf']]);
+            $router->get('/profile/preferences', 'ProfileController@preferences');
+            $router->post('/profile/update-preferences', 'ProfileController@updatePreferences', ['middleware' => ['csrf']]);
+            $router->get('/profile/activity', 'ProfileController@activity');
+            $router->get('/profile/export-data', 'ProfileController@exportData');
+            $router->post('/profile/delete-account', 'ProfileController@deleteAccount', ['middleware' => ['csrf']]);
+            $router->get('/profile/download-report', 'ProfileController@downloadReport');
+            
+            // Reports and analytics
+            $router->get('/reports', 'ReportsController@index');
+            $router->get('/reports/sales', 'ReportsController@sales');
+            $router->get('/reports/sales/{type}', 'ReportsController@sales');
+            $router->get('/reports/inventory', 'ReportsController@inventory');
+            $router->get('/reports/inventory/{type}', 'ReportsController@inventory');
+            $router->get('/reports/financial', 'ReportsController@financial');
+            $router->get('/reports/financial/{type}', 'ReportsController@financial');
+            $router->get('/reports/clients', 'ReportsController@clients');
+            $router->get('/reports/clients/{type}', 'ReportsController@clients');
+            $router->get('/reports/custom', 'ReportsController@custom');
+            $router->post('/reports/generate-custom', 'ReportsController@generateCustom', ['middleware' => ['csrf']]);
+            
+            // Settings (admin role check handled in controller)
+            $router->get('/settings', 'SettingsController@index');
+            $router->get('/settings/general', 'SettingsController@general');
+            $router->post('/settings/update-general', 'SettingsController@updateGeneral', ['middleware' => ['csrf']]);
+            $router->get('/settings/security', 'SettingsController@security');
+            $router->post('/settings/update-security', 'SettingsController@updateSecurity', ['middleware' => ['csrf']]);
+            $router->get('/settings/email', 'SettingsController@email');
+            $router->post('/settings/update-email', 'SettingsController@updateEmail', ['middleware' => ['csrf']]);
+            $router->post('/settings/test-email', 'SettingsController@testEmail', ['middleware' => ['csrf']]);
+            $router->get('/settings/backup', 'SettingsController@backup');
+            $router->post('/settings/create-backup', 'SettingsController@createBackup', ['middleware' => ['csrf']]);
+            $router->get('/settings/download-backup/{filename}', 'SettingsController@downloadBackup');
+            $router->post('/settings/delete-backup/{filename}', 'SettingsController@deleteBackup', ['middleware' => ['csrf']]);
+            $router->get('/settings/maintenance', 'SettingsController@maintenance');
+            $router->post('/settings/run-maintenance', 'SettingsController@runMaintenance', ['middleware' => ['csrf']]);
+            $router->get('/settings/logs', 'SettingsController@logs');
             
             // AJAX endpoints
             $router->get('/api/dropdowns/get-by-parent', 'DropdownController@getByParent');
