@@ -178,14 +178,14 @@ class I18n
 
     private static function loadTranslations(string $locale): void
     {
-        $translationFile = dirname(__DIR__, 2) . "/lang/{$locale}.php";
+        $translationFile = dirname(__DIR__) . "/lang/{$locale}.php";
         
         if (file_exists($translationFile)) {
             self::$translations[$locale] = include $translationFile;
         } else {
             // Fallback to English if translation file doesn't exist
             if ($locale !== 'en') {
-                $fallbackFile = dirname(__DIR__, 2) . "/lang/en.php";
+                $fallbackFile = dirname(__DIR__) . "/lang/en.php";
                 if (file_exists($fallbackFile)) {
                     self::$translations[$locale] = include $fallbackFile;
                 }

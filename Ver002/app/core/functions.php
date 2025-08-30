@@ -20,6 +20,13 @@ if (!function_exists('csrf_field')) {
     }
 }
 
+if (!function_exists('verify_csrf_token')) {
+    function verify_csrf_token(): bool
+    {
+        return \App\Core\Helpers::verifyCsrf();
+    }
+}
+
 if (!function_exists('old')) {
     function old(string $key, $default = '')
     {
