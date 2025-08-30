@@ -310,15 +310,3 @@ class I18n
         return $url . $separator . 'lang=' . $locale;
     }
 }
-
-// Global helper function for translations
-function t(string $key, array $params = []): string
-{
-    return I18n::translate($key, $params);
-}
-
-// Global helper function for pluralization
-function tc(string $key, int $number, array $params = []): string
-{
-    return I18n::translateChoice($key, $number, $params);
-}

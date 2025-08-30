@@ -34,6 +34,9 @@ if (isset($_ENV['APP_DEBUG']) && $_ENV['APP_DEBUG'] === 'true') {
 // Define base path
 define('BASE_PATH', dirname(__DIR__));
 
+// Load global functions first
+require_once BASE_PATH . '/app/core/functions.php';
+
 // Autoloader
 require_once BASE_PATH . '/app/core/Autoloader.php';
 App\Core\Autoloader::register();

@@ -28,6 +28,9 @@ class Application
 
     private function initializeFramework(): void
     {
+        // Load global functions FIRST (before anything else)
+        require_once dirname(__DIR__) . '/core/functions.php';
+        
         // Initialize configuration
         Config::init();
         
@@ -36,16 +39,6 @@ class Application
             session_start();
         }
 
-        // Load helper functions early (this will trigger autoloading)
-        if (!class_exists('App\Core\Helpers')) {
-            require_once dirname(__DIR__) . '/core/Helpers.php';
-        }
-        
-        // Load I18n functions early (to ensure global t() function is available)
-        if (!class_exists('App\Core\I18n')) {
-            require_once dirname(__DIR__) . '/core/I18n.php';
-        }
-        
         // Initialize internationalization
         I18n::init();
         
