@@ -31,17 +31,17 @@ class Application
         // Initialize configuration
         Config::init();
         
-        // Load helper functions early
-        if (!class_exists('App\Core\Helpers')) {
-            require_once dirname(__DIR__) . '/core/Helpers.php';
-        }
-        
         // Start session with security settings
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Initialize internationalization
+        // Load helper functions early (this will trigger autoloading)
+        if (!class_exists('App\Core\Helpers')) {
+            require_once dirname(__DIR__) . '/core/Helpers.php';
+        }
+        
+        // Initialize internationalization (this loads I18n.php with t() function)
         I18n::init();
         
         // Set error handler for production

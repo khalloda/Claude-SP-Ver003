@@ -202,12 +202,6 @@ if (!function_exists('error')) {
     }
 }
 
-if (!function_exists('t')) {
-    function t(string $key, array $params = []): string
-    {
-        return \App\Core\I18n::t($key, $params);
-    }
-}
 
 if (!function_exists('asset')) {
     function asset(string $path): string
