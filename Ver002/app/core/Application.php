@@ -41,7 +41,12 @@ class Application
             require_once dirname(__DIR__) . '/core/Helpers.php';
         }
         
-        // Initialize internationalization (this loads I18n.php with t() function)
+        // Load I18n functions early (to ensure global t() function is available)
+        if (!class_exists('App\Core\I18n')) {
+            require_once dirname(__DIR__) . '/core/I18n.php';
+        }
+        
+        // Initialize internationalization
         I18n::init();
         
         // Set error handler for production
