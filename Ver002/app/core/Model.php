@@ -84,6 +84,16 @@ abstract class Model
         return (new QueryBuilder(static::class))->where($column, $operator, $value);
     }
 
+    public static function orderBy(string $column, string $direction = 'ASC'): QueryBuilder
+    {
+        return (new QueryBuilder(static::class))->orderBy($column, $direction);
+    }
+
+    public static function limit(int $limit): QueryBuilder
+    {
+        return (new QueryBuilder(static::class))->limit($limit);
+    }
+
     public static function all(): array
     {
         $sql = "SELECT * FROM " . static::getTable() . " ORDER BY " . static::$primaryKey;
