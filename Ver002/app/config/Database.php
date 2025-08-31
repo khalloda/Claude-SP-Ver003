@@ -31,7 +31,13 @@ class Database
     {
         $config = Config::get('database');
         
-        $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['database']};charset={$config['charset']}";
+        // For GoDaddy/Windows hosting, include port in hostname if not default
+        if ($config['port'] && $config['port'] != 3306) {
+            $host = $config['host'] . ':' . $config['port'];
+            $dsn = "mysql:host={$host};dbname={$config['database']};charset={$config['charset']}";
+        } else {
+            $dsn = "mysql:host={$config['host']};dbname={$config['database']};charset={$config['charset']}";
+        }
 
         try {
             self::$instance = new PDO(
