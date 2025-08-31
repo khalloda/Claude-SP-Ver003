@@ -122,7 +122,15 @@ return [
         'create_quote' => 'إنشاء عرض سعر',
         'add_client' => 'إضافة عميل',
         'add_product' => 'إضافة منتج',
-        'view_reports' => 'عرض التقارير'
+        'view_reports' => 'عرض التقارير',
+        'total_revenue' => 'إجمالي الإيرادات',
+        'recent_activity' => 'النشاط الحديث',
+        'no_recent_activity' => 'لا توجد أنشطة حديثة للعرض',
+        'low_stock_alert' => 'تنبيه نفاد المخزون',
+        'all_stock_good' => 'جميع مستويات المخزون جيدة',
+        'revenue_chart' => 'مخطط الإيرادات',
+        'order_status_distribution' => 'توزيع حالة الطلبات',
+        'revenue' => 'الإيرادات'
     ],
 
     // Products - المنتجات

@@ -182,7 +182,9 @@ class I18n
         
         if (file_exists($translationFile)) {
             self::$translations[$locale] = include $translationFile;
+            error_log("I18n: Loaded translations for locale: {$locale} from {$translationFile}");
         } else {
+            error_log("I18n: Translation file not found: {$translationFile}");
             // Fallback to English if translation file doesn't exist
             if ($locale !== 'en') {
                 $fallbackFile = dirname(__DIR__) . "/lang/en.php";

@@ -122,7 +122,15 @@ return [
         'create_quote' => 'Create Quote',
         'add_client' => 'Add Client',
         'add_product' => 'Add Product',
-        'view_reports' => 'View Reports'
+        'view_reports' => 'View Reports',
+        'total_revenue' => 'Total Revenue',
+        'recent_activity' => 'Recent Activity',
+        'no_recent_activity' => 'No recent activity to display',
+        'low_stock_alert' => 'Low Stock Alert',
+        'all_stock_good' => 'All stock levels are good',
+        'revenue_chart' => 'Revenue Chart',
+        'order_status_distribution' => 'Order Status Distribution',
+        'revenue' => 'Revenue'
     ],
 
     // Products
