@@ -30,6 +30,7 @@ return [
         'status' => 'Status',
         'date' => 'Date',
         'time' => 'Time',
+        'no_date' => 'No date',
         'name' => 'Name',
         'email' => 'Email',
         'phone' => 'Phone',

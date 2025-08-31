@@ -10,6 +10,10 @@ ob_start();
 
 // Get current user (from session or controller data)
 $currentUser = $current_user ?? ($_SESSION['user'] ?? null);
+
+// Define permission variables safely
+$canManageUsers = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager']);
+$canManageProducts = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'inventory']);
 ?>
 
 <div class="container-fluid">
@@ -110,7 +114,16 @@ $currentUser = $current_user ?? ($_SESSION['user'] ?? null);
                                             <div class="small text-muted"><?= htmlspecialchars($activity['description']) ?></div>
                                         </td>
                                         <td class="text-end">
-                                            <div class="small text-muted"><?= date('M d, H:i', strtotime($activity['created_at'])) ?></div>
+                                            <div class="small text-muted">
+                                                <?php 
+                                                $activityDate = $activity['date'] ?? $activity['created_at'] ?? null;
+                                                if ($activityDate) {
+                                                    echo date('M d, H:i', strtotime($activityDate));
+                                                } else {
+                                                    echo t('common.no_date');
+                                                }
+                                                ?>
+                                            </div>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
