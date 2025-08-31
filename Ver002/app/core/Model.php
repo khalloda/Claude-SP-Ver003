@@ -370,9 +370,15 @@ class QueryBuilder
         $this->modelClass = $modelClass;
     }
 
-    public function where(string $column, string $operator, $value): self
+    public function where(string $column, $operatorOrValue, $value = null): self
     {
-        $this->wheres[] = [$column, $operator, $value];
+        if ($value === null) {
+            // Two arguments: column and value (operator defaults to '=')
+            $this->wheres[] = [$column, '=', $operatorOrValue];
+        } else {
+            // Three arguments: column, operator, and value
+            $this->wheres[] = [$column, $operatorOrValue, $value];
+        }
         return $this;
     }
 
