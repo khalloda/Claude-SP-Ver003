@@ -73,7 +73,7 @@ class Product extends Model
     public static function getLowStockProducts(): array
     {
         return self::where('status', self::STATUS_ACTIVE)
-                  ->where('stock_quantity', '<=', 'min_stock_level')
+                  ->whereRaw('stock_quantity <= min_stock_level')
                   ->orderBy('stock_quantity')
                   ->get();
     }

@@ -94,6 +94,11 @@ abstract class Model
         return (new QueryBuilder(static::class))->limit($limit);
     }
 
+    public static function whereRaw(string $rawSql, array $bindings = []): QueryBuilder
+    {
+        return (new QueryBuilder(static::class))->whereRaw($rawSql, $bindings);
+    }
+
     public static function all(): array
     {
         $sql = "SELECT * FROM " . static::getTable() . " ORDER BY " . static::$primaryKey;
@@ -384,11 +389,29 @@ class QueryBuilder
     {
         if ($value === null) {
             // Two arguments: column and value (operator defaults to '=')
-            $this->wheres[] = [$column, '=', $operatorOrValue];
+            $this->wheres[] = ['AND', $column, '=', $operatorOrValue];
         } else {
             // Three arguments: column, operator, and value
-            $this->wheres[] = [$column, $operatorOrValue, $value];
+            $this->wheres[] = ['AND', $column, $operatorOrValue, $value];
         }
+        return $this;
+    }
+
+    public function orWhere(string $column, $operatorOrValue, $value = null): self
+    {
+        if ($value === null) {
+            // Two arguments: column and value (operator defaults to '=')
+            $this->wheres[] = ['OR', $column, '=', $operatorOrValue];
+        } else {
+            // Three arguments: column, operator, and value
+            $this->wheres[] = ['OR', $column, $operatorOrValue, $value];
+        }
+        return $this;
+    }
+
+    public function whereRaw(string $rawSql, array $bindings = []): self
+    {
+        $this->wheres[] = ['AND', 'RAW', $rawSql, $bindings];
         return $this;
     }
 
@@ -447,10 +470,23 @@ class QueryBuilder
 
         if (!empty($this->wheres)) {
             $whereClauses = [];
+            $isFirst = true;
+            
             foreach ($this->wheres as $where) {
-                $whereClauses[] = "{$where[0]} {$where[1]} ?";
+                $connector = $isFirst ? '' : " {$where[0]} ";
+                
+                if ($where[1] === 'RAW') {
+                    // Raw SQL condition
+                    $whereClauses[] = "{$connector}({$where[2]})";
+                } else {
+                    // Regular condition
+                    $column = $where[1];
+                    $operator = $where[2];
+                    $whereClauses[] = "{$connector}{$column} {$operator} ?";
+                }
+                $isFirst = false;
             }
-            $sql .= " WHERE " . implode(' AND ', $whereClauses);
+            $sql .= " WHERE " . implode('', $whereClauses);
         }
 
         if (!empty($this->orderBy)) {
@@ -476,7 +512,15 @@ class QueryBuilder
     {
         $bindings = [];
         foreach ($this->wheres as $where) {
-            $bindings[] = $where[2];
+            if ($where[1] === 'RAW') {
+                // Raw SQL bindings are arrays
+                if (is_array($where[3])) {
+                    $bindings = array_merge($bindings, $where[3]);
+                }
+            } else {
+                // Regular bindings
+                $bindings[] = $where[3]; // Value is at index 3: [connector, column, operator, value]
+            }
         }
         return $bindings;
     }

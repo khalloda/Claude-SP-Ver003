@@ -59,20 +59,31 @@ abstract class Controller
         include $viewPath;
     }
 
-    protected function layout(string $layout, string $content, array $data = []): void
+    protected function layout(string $layout, $contentOrData = null, array $data = []): void
     {
-        $data = array_merge($this->data, $data);
-        $data['content'] = $content;
+        // Handle two calling patterns:
+        // 1. layout($layout, $data) - for views that call $this->layout() directly
+        // 2. layout($layout, $content, $data) - for controller internal use
         
-        extract($data);
-        
-        $layoutPath = dirname(__DIR__) . "/views/layouts/{$layout}.php";
-        
-        if (!file_exists($layoutPath)) {
-            throw new \RuntimeException("Layout not found: {$layout}");
-        }
+        if (is_array($contentOrData)) {
+            // Pattern 1: layout($layout, $data) - set up for view rendering
+            $this->data = array_merge($this->data, $contentOrData);
+            return; // View will handle the actual rendering
+        } else {
+            // Pattern 2: layout($layout, $content, $data) - render immediately
+            $data = array_merge($this->data, $data);
+            $data['content'] = $contentOrData;
+            
+            extract($data);
+            
+            $layoutPath = dirname(__DIR__) . "/views/layouts/{$layout}.php";
+            
+            if (!file_exists($layoutPath)) {
+                throw new \RuntimeException("Layout not found: {$layout}");
+            }
 
-        include $layoutPath;
+            include $layoutPath;
+        }
     }
 
     protected function json(array $data, int $statusCode = 200): void
@@ -244,6 +255,19 @@ abstract class Controller
     protected function getCurrentUser(): ?array
     {
         return $_SESSION['user'] ?? null;
+    }
+
+    // Add methods that views call directly
+    public function hasRole($roles): bool
+    {
+        $user = $this->getCurrentUser();
+        if (!$user) return false;
+        
+        if (is_string($roles)) {
+            $roles = [$roles];
+        }
+        
+        return in_array($user['role'] ?? '', $roles);
     }
 
     protected function requireAuth(): void
