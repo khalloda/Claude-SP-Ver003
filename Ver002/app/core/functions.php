@@ -101,3 +101,11 @@ if (!function_exists('format_date')) {
         return \App\Core\Helpers::formatDate($date, $format);
     }
 }
+
+if (!function_exists('class_basename')) {
+    function class_basename(string $class): string
+    {
+        $class = is_object($class) ? get_class($class) : $class;
+        return basename(str_replace('\\', '/', $class));
+    }
+}
