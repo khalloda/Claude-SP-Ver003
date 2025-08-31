@@ -31,6 +31,7 @@ return [
         'date' => 'التاريخ',
         'time' => 'الوقت',
         'no_date' => 'لا يوجد تاريخ',
+        'view_all' => 'عرض الكل',
         'name' => 'الاسم',
         'email' => 'البريد الإلكتروني',
         'phone' => 'الهاتف',
@@ -133,6 +134,24 @@ return [
         'revenue' => 'الإيرادات'
     ],
 
+    // Quotes - عروض الأسعار
+    'quotes' => [
+        'create_quote' => 'إنشاء عرض سعر',
+        'create_new_quote_desc' => 'إنشاء عرض سعر جديد للعميل'
+    ],
+
+    // Sales Orders - أوامر المبيعات
+    'sales_orders' => [
+        'create_order' => 'إنشاء طلب',
+        'create_new_order_desc' => 'إنشاء أمر مبيعات جديد من عرض سعر'
+    ],
+
+    // Invoices - الفواتير
+    'invoices' => [
+        'create_invoice' => 'إنشاء فاتورة',
+        'create_new_invoice_desc' => 'إنشاء فاتورة جديدة للعمل المكتمل'
+    ],
+
     // Products - المنتجات
     'products' => [
         'product' => 'المنتج',
@@ -158,7 +177,8 @@ return [
         'adjust_stock' => 'تعديل المخزون',
         'add_stock' => 'إضافة مخزون',
         'remove_stock' => 'إزالة مخزون',
-        'stock_reason' => 'سبب تغيير المخزون'
+        'stock_reason' => 'سبب تغيير المخزون',
+        'add_new_product_desc' => 'أضف منتجاً جديداً إلى مخزونك'
     ],
 
     // Clients - العملاء

@@ -53,18 +53,10 @@ if (!function_exists('t')) {
     {
         // Ensure I18n is loaded
         if (class_exists('\App\Core\I18n')) {
-            $result = \App\Core\I18n::translate($key, $params);
-            
-            // Debug: If translation returns the key unchanged, it means translation failed
-            if ($result === $key && strpos($key, '.') !== false) {
-                error_log("Translation missing for key: {$key}");
-            }
-            
-            return $result;
+            return \App\Core\I18n::translate($key, $params);
         }
         
         // Fallback if I18n not loaded yet
-        error_log("I18n class not loaded, returning key: {$key}");
         return $key;
     }
 }

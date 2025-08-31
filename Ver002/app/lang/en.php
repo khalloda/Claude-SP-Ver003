@@ -31,6 +31,7 @@ return [
         'date' => 'Date',
         'time' => 'Time',
         'no_date' => 'No date',
+        'view_all' => 'View All',
         'name' => 'Name',
         'email' => 'Email',
         'phone' => 'Phone',
@@ -133,6 +134,24 @@ return [
         'revenue' => 'Revenue'
     ],
 
+    // Quotes
+    'quotes' => [
+        'create_quote' => 'Create Quote',
+        'create_new_quote_desc' => 'Create a new quote for a client'
+    ],
+
+    // Sales Orders  
+    'sales_orders' => [
+        'create_order' => 'Create Order',
+        'create_new_order_desc' => 'Create a new sales order from a quote'
+    ],
+
+    // Invoices
+    'invoices' => [
+        'create_invoice' => 'Create Invoice',
+        'create_new_invoice_desc' => 'Create a new invoice for completed work'
+    ],
+
     // Products
     'products' => [
         'product' => 'Product',
@@ -158,7 +177,8 @@ return [
         'adjust_stock' => 'Adjust Stock',
         'add_stock' => 'Add Stock',
         'remove_stock' => 'Remove Stock',
-        'stock_reason' => 'Reason for Stock Change'
+        'stock_reason' => 'Reason for Stock Change',
+        'add_new_product_desc' => 'Add a new product to your inventory'
     ],
 
     // Clients
