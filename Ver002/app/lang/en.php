@@ -32,6 +32,7 @@ return [
         'time' => 'Time',
         'no_date' => 'No date',
         'view_all' => 'View All',
+        'logged_in_as' => 'Logged in as',
         'name' => 'Name',
         'email' => 'Email',
         'phone' => 'Phone',
@@ -99,7 +100,9 @@ return [
         'notifications' => 'Notifications',
         'no_notifications' => 'No new notifications',
         'view_all_notifications' => 'View All Notifications',
-        'just_now' => 'Just now'
+        'just_now' => 'Just now',
+        'settings' => 'Settings',
+        'reports' => 'Reports'
     ],
 
     // Dashboard
@@ -137,19 +140,22 @@ return [
     // Quotes
     'quotes' => [
         'create_quote' => 'Create Quote',
-        'create_new_quote_desc' => 'Create a new quote for a client'
+        'create_new_quote_desc' => 'Create a new quote for a client',
+        'new_quote' => 'New Quote'
     ],
 
     // Sales Orders  
     'sales_orders' => [
         'create_order' => 'Create Order',
-        'create_new_order_desc' => 'Create a new sales order from a quote'
+        'create_new_order_desc' => 'Create a new sales order from a quote',
+        'new_order' => 'New Order'
     ],
 
     // Invoices
     'invoices' => [
         'create_invoice' => 'Create Invoice',
-        'create_new_invoice_desc' => 'Create a new invoice for completed work'
+        'create_new_invoice_desc' => 'Create a new invoice for completed work',
+        'new_invoice' => 'New Invoice'
     ],
 
     // Products

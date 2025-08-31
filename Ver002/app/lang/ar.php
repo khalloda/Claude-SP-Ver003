@@ -32,6 +32,7 @@ return [
         'time' => 'الوقت',
         'no_date' => 'لا يوجد تاريخ',
         'view_all' => 'عرض الكل',
+        'logged_in_as' => 'مسجل الدخول باسم',
         'name' => 'الاسم',
         'email' => 'البريد الإلكتروني',
         'phone' => 'الهاتف',
@@ -99,7 +100,9 @@ return [
         'notifications' => 'الإشعارات',
         'no_notifications' => 'لا توجد إشعارات جديدة',
         'view_all_notifications' => 'عرض جميع الإشعارات',
-        'just_now' => 'الآن'
+        'just_now' => 'الآن',
+        'settings' => 'الإعدادات',
+        'reports' => 'التقارير'
     ],
 
     // Dashboard - لوحة التحكم
@@ -137,19 +140,22 @@ return [
     // Quotes - عروض الأسعار
     'quotes' => [
         'create_quote' => 'إنشاء عرض سعر',
-        'create_new_quote_desc' => 'إنشاء عرض سعر جديد للعميل'
+        'create_new_quote_desc' => 'إنشاء عرض سعر جديد للعميل',
+        'new_quote' => 'عرض سعر جديد'
     ],
 
     // Sales Orders - أوامر المبيعات
     'sales_orders' => [
         'create_order' => 'إنشاء طلب',
-        'create_new_order_desc' => 'إنشاء أمر مبيعات جديد من عرض سعر'
+        'create_new_order_desc' => 'إنشاء أمر مبيعات جديد من عرض سعر',
+        'new_order' => 'طلب جديد'
     ],
 
     // Invoices - الفواتير
     'invoices' => [
         'create_invoice' => 'إنشاء فاتورة',
-        'create_new_invoice_desc' => 'إنشاء فاتورة جديدة للعمل المكتمل'
+        'create_new_invoice_desc' => 'إنشاء فاتورة جديدة للعمل المكتمل',
+        'new_invoice' => 'فاتورة جديدة'
     ],
 
     // Products - المنتجات
