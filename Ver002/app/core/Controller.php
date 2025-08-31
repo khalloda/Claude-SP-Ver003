@@ -270,6 +270,61 @@ abstract class Controller
         return in_array($user['role'] ?? '', $roles);
     }
 
+    public function csrf(): string
+    {
+        return '<input type="hidden" name="_token" value="' . csrf_token() . '">';
+    }
+
+    public function error(string $key): string
+    {
+        return $this->errors[$key] ?? '';
+    }
+
+    public function selected(string $field, $value, $default = null): string
+    {
+        $inputValue = $this->input[$field] ?? $default;
+        return $inputValue == $value ? 'selected="selected"' : '';
+    }
+
+    public function checked(string $field, $value, $default = false): string
+    {
+        $inputValue = $this->input[$field] ?? $default;
+        return $inputValue == $value ? 'checked="checked"' : '';
+    }
+
+    public function getCurrentLocale(): string
+    {
+        return $_SESSION['lang'] ?? 'en';
+    }
+
+    public function paginate(array $data, int $total = 0, int $page = 1, int $perPage = 15): string
+    {
+        // Basic pagination implementation
+        $totalPages = ceil($total / $perPage);
+        if ($totalPages <= 1) return '';
+        
+        $html = '<nav><ul class="pagination">';
+        
+        // Previous button
+        if ($page > 1) {
+            $html .= '<li class="page-item"><a class="page-link" href="?page=' . ($page - 1) . '">Previous</a></li>';
+        }
+        
+        // Page numbers
+        for ($i = 1; $i <= $totalPages; $i++) {
+            $active = $i == $page ? 'active' : '';
+            $html .= '<li class="page-item ' . $active . '"><a class="page-link" href="?page=' . $i . '">' . $i . '</a></li>';
+        }
+        
+        // Next button
+        if ($page < $totalPages) {
+            $html .= '<li class="page-item"><a class="page-link" href="?page=' . ($page + 1) . '">Next</a></li>';
+        }
+        
+        $html .= '</ul></nav>';
+        return $html;
+    }
+
     protected function requireAuth(): void
     {
         if (!$this->getCurrentUser()) {

@@ -51,17 +51,17 @@ class DashboardController extends Controller
 
     private function getTotalProducts(): int
     {
-        return count(Product::where('status', Product::STATUS_ACTIVE)->get());
+        return Product::where('status', Product::STATUS_ACTIVE)->count();
     }
 
     private function getTotalClients(): int
     {
-        return count(Client::where('status', Client::STATUS_ACTIVE)->get());
+        return Client::where('status', Client::STATUS_ACTIVE)->count();
     }
 
     private function getPendingQuotesCount(): int
     {
-        return count(Quote::where('status', Quote::STATUS_SENT)->get());
+        return Quote::where('status', Quote::STATUS_SENT)->count();
     }
 
     private function getMonthlySales(): float
@@ -84,7 +84,9 @@ class DashboardController extends Controller
 
     private function getLowStockCount(): int
     {
-        return count(Product::getLowStockProducts());
+        return Product::where('status', Product::STATUS_ACTIVE)
+                     ->whereRaw('stock_quantity <= min_stock_level')
+                     ->count();
     }
 
     private function getTotalInventoryValue(): float

@@ -463,6 +463,22 @@ class QueryBuilder
         return $results[0] ?? null;
     }
 
+    public function count(): int
+    {
+        $sql = $this->buildCountQuery();
+        $bindings = $this->getBindings();
+
+        try {
+            $stmt = Database::getInstance()->prepare($sql);
+            $stmt->execute($bindings);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int)($result['count'] ?? 0);
+        } catch (PDOException $e) {
+            error_log("QueryBuilder count error: " . $e->getMessage());
+            return 0;
+        }
+    }
+
     private function buildSelectQuery(): string
     {
         $table = $this->modelClass::getTable();
@@ -523,5 +539,34 @@ class QueryBuilder
             }
         }
         return $bindings;
+    }
+
+    private function buildCountQuery(): string
+    {
+        $table = $this->modelClass::getTable();
+        $sql = "SELECT COUNT(*) as count FROM {$table}";
+
+        if (!empty($this->wheres)) {
+            $whereClauses = [];
+            $isFirst = true;
+            
+            foreach ($this->wheres as $where) {
+                $connector = $isFirst ? '' : " {$where[0]} ";
+                
+                if ($where[1] === 'RAW') {
+                    // Raw SQL condition
+                    $whereClauses[] = "{$connector}({$where[2]})";
+                } else {
+                    // Regular condition
+                    $column = $where[1];
+                    $operator = $where[2];
+                    $whereClauses[] = "{$connector}{$column} {$operator} ?";
+                }
+                $isFirst = false;
+            }
+            $sql .= " WHERE " . implode('', $whereClauses);
+        }
+
+        return $sql;
     }
 }
