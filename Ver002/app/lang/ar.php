@@ -48,7 +48,9 @@ return [
         'all' => 'الكل',
         'none' => 'لا شيء',
         'required' => 'مطلوب',
-        'optional' => 'اختياري'
+        'optional' => 'اختياري',
+		'powered_by' => 'بواسطة',
+		'online' => 'متصل'
     ],
 
     // Authentication - المصادقة
@@ -184,6 +186,7 @@ return [
         'add_stock' => 'إضافة مخزون',
         'remove_stock' => 'إزالة مخزون',
         'stock_reason' => 'سبب تغيير المخزون',
+		'add_product' => 'إضافة منتج',
         'add_new_product_desc' => 'أضف منتجاً جديداً إلى مخزونك'
     ],
 

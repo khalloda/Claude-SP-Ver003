@@ -48,7 +48,9 @@ return [
         'all' => 'All',
         'none' => 'None',
         'required' => 'Required',
-        'optional' => 'Optional'
+        'optional' => 'Optional',
+		'powered_by' => 'Powered By',
+		'online' => 'Online'
     ],
 
     // Authentication
@@ -184,6 +186,7 @@ return [
         'add_stock' => 'Add Stock',
         'remove_stock' => 'Remove Stock',
         'stock_reason' => 'Reason for Stock Change',
+		'add_product' => 'Add New Product',
         'add_new_product_desc' => 'Add a new product to your inventory'
     ],
 

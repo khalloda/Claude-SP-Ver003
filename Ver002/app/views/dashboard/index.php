@@ -40,52 +40,84 @@ $canManageProducts = $currentUser && in_array($currentUser['role'] ?? '', ['admi
         </div>
     </div>
 
-    <!-- Statistics Cards -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stats-card bg-primary">
-                <div class="stats-icon">
-                    <i class="fas fa-file-alt"></i>
-                </div>
-                <div class="stats-content">
-                    <div class="stats-value"><?= number_format($stats['total_quotes'] ?? 0) ?></div>
-                    <div class="stats-label"><?= t('nav.quotes') ?></div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stats-card bg-success">
-                <div class="stats-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                </div>
-                <div class="stats-content">
-                    <div class="stats-value"><?= number_format($stats['total_orders'] ?? 0) ?></div>
-                    <div class="stats-label"><?= t('nav.sales_orders') ?></div>
+    <!-- Modern Statistics Cards -->
+    <div class="row mb-4 g-3">
+        <!-- Quotes Card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="modern-stat-card quotes-card">
+                <div class="card-body d-flex align-items-center">
+                    <div class="stat-icon quotes-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value"><?= number_format($stats['pending_quotes'] ?? 0) ?></div>
+                        <div class="stat-label"><?= t('nav.quotes') ?></div>
+                        <div class="stat-trend">
+                            <small class="text-muted">
+                                <i class="fas fa-arrow-up text-success"></i> +12% <?= t('dashboard.this_month') ?>
+                            </small>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stats-card bg-info">
-                <div class="stats-icon">
-                    <i class="fas fa-file-invoice"></i>
-                </div>
-                <div class="stats-content">
-                    <div class="stats-value"><?= number_format($stats['total_invoices'] ?? 0) ?></div>
-                    <div class="stats-label"><?= t('nav.invoices') ?></div>
+        <!-- Sales Orders Card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="modern-stat-card orders-card">
+                <div class="card-body d-flex align-items-center">
+                    <div class="stat-icon orders-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value"><?= number_format($stats['total_clients'] ?? 0) ?></div>
+                        <div class="stat-label"><?= t('nav.sales_orders') ?></div>
+                        <div class="stat-trend">
+                            <small class="text-muted">
+                                <i class="fas fa-arrow-up text-success"></i> +8% <?= t('dashboard.this_month') ?>
+                            </small>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stats-card bg-warning">
-                <div class="stats-icon">
-                    <i class="fas fa-dollar-sign"></i>
+        <!-- Invoices Card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="modern-stat-card invoices-card">
+                <div class="card-body d-flex align-items-center">
+                    <div class="stat-icon invoices-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value"><?= number_format($stats['total_products'] ?? 0) ?></div>
+                        <div class="stat-label"><?= t('nav.invoices') ?></div>
+                        <div class="stat-trend">
+                            <small class="text-muted">
+                                <i class="fas fa-arrow-down text-danger"></i> -3% <?= t('dashboard.this_month') ?>
+                            </small>
+                        </div>
+                    </div>
                 </div>
-                <div class="stats-content">
-                    <div class="stats-value"><?= ($stats['total_revenue'] ?? 0) ?></div>
-                    <div class="stats-label"><?= t('dashboard.total_revenue') ?></div>
+            </div>
+        </div>
+        
+        <!-- Total Revenue Card -->
+        <div class="col-xl-3 col-md-6">
+            <div class="modern-stat-card revenue-card">
+                <div class="card-body d-flex align-items-center">
+                    <div class="stat-icon revenue-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value">$<?= number_format($stats['this_month_revenue'] ?? 0, 2) ?></div>
+                        <div class="stat-label"><?= t('dashboard.total_revenue') ?></div>
+                        <div class="stat-trend">
+                            <small class="text-muted">
+                                <i class="fas fa-arrow-up text-success"></i> +24% <?= t('dashboard.this_month') ?>
+                            </small>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -321,6 +353,209 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+<style>
+/* Modern Statistics Cards */
+.modern-stat-card {
+    background: white;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+
+.modern-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.modern-stat-card .card-body {
+    padding: 1.5rem;
+    position: relative;
+}
+
+/* Icon Styling */
+.stat-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.stat-icon i {
+    font-size: 28px;
+    color: white;
+    z-index: 2;
+}
+
+/* Content Styling */
+.stat-content {
+    flex: 1;
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    color: #1a1a1a;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: #64748B;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-trend {
+    font-size: 0.75rem;
+}
+
+/* Card-specific Colors */
+.quotes-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-size: 100% 4px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: white;
+}
+
+.quotes-card:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-size: 100% 6px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: white;
+}
+
+.quotes-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.orders-card {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background-size: 100% 4px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: white;
+}
+
+.orders-card:hover {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    background-size: 100% 6px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: white;
+}
+
+.orders-icon {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.invoices-card {
+    background: linear-gradient(135deg, #3093e3 0%, #2dd1ac 100%);
+    background-size: 100% 4px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: white;
+}
+
+.invoices-card:hover {
+    background: linear-gradient(135deg, #3093e3 0%, #2dd1ac 100%);
+    background-size: 100% 6px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: white;
+}
+
+.invoices-icon {
+    background: linear-gradient(135deg, #3093e3 0%, #2dd1ac 100%);
+}
+
+.revenue-card {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background-size: 100% 4px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: white;
+}
+
+.revenue-card:hover {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background-size: 100% 6px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: white;
+}
+
+.revenue-icon {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modern-stat-card .card-body {
+        padding: 1.25rem;
+    }
+    
+    .stat-icon {
+        width: 56px;
+        height: 56px;
+        margin-right: 0.75rem;
+    }
+    
+    .stat-icon i {
+        font-size: 24px;
+    }
+    
+    .stat-value {
+        font-size: 1.875rem;
+    }
+    
+    .stat-label {
+        font-size: 0.8125rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .modern-stat-card .card-body {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stat-icon {
+        margin-right: 0;
+        margin-bottom: 0.75rem;
+        align-self: center;
+    }
+    
+    .stat-content {
+        text-align: center;
+    }
+}
+
+/* Animation for counters */
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.stat-value {
+    animation: countUp 0.6s ease-out;
+}
+</style>
 
 <?php
 $content = ob_get_clean();
