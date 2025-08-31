@@ -298,7 +298,9 @@ class DashboardController extends Controller
         
         // Sort by date and limit to 10
         usort($activities, function($a, $b) {
-            return strtotime($b['date']) - strtotime($a['date']);
+            $dateA = $a['date'] ? strtotime($a['date']) : 0;
+            $dateB = $b['date'] ? strtotime($b['date']) : 0;
+            return $dateB - $dateA;
         });
         
         return array_slice($activities, 0, 10);

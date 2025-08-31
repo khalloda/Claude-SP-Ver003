@@ -5,15 +5,11 @@
  * Layout: Uses app layout with responsive design
  */
 
-$this->layout('layouts/app', [
-    'title' => $page_title ?? t('nav.dashboard'),
-    'active_nav' => 'dashboard'
-]);
+$page_title = t('nav.dashboard');
+ob_start();
 
-// Get current user and check permissions
-$currentUser = $this->getCurrentUser();
-$canManageUsers = $this->hasRole(['admin', 'manager']);
-$canManageProducts = $this->hasRole(['admin', 'manager', 'inventory']);
+// Get current user (from session or controller data)
+$currentUser = $current_user ?? ($_SESSION['user'] ?? null);
 ?>
 
 <div class="container-fluid">
@@ -312,3 +308,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/app.php';
+?>
