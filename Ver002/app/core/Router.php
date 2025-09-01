@@ -82,6 +82,8 @@ class Router
 
     private function normalizeUri(string $uri): string
     {
+        // Remove multiple consecutive slashes
+        $uri = preg_replace('#/+#', '/', $uri);
         $uri = '/' . trim($uri, '/');
         return $uri === '/' ? '/' : rtrim($uri, '/');
     }
@@ -109,9 +111,14 @@ class Router
                     return;
                 }
 
-                $params = $this->extractParameters($route['uri'], $matches);
-                $this->executeAction($route['action'], $params);
-                return;
+                try {
+                    $params = $this->extractParameters($route['uri'], $matches);
+                    $this->executeAction($route['action'], $params);
+                    return;
+                } catch (\InvalidArgumentException $e) {
+                    // Invalid parameters (like non-numeric ID), continue to next route
+                    continue;
+                }
             }
         }
 
