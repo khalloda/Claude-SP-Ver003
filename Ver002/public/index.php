@@ -34,6 +34,13 @@ if (isset($_ENV['APP_DEBUG']) && $_ENV['APP_DEBUG'] === 'true') {
 // Define base path
 define('BASE_PATH', dirname(__DIR__));
 
+// Early exit for static assets to prevent routing through PHP
+$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+$file_path = $_SERVER['DOCUMENT_ROOT'] . parse_url($request_uri, PHP_URL_PATH);
+if (file_exists($file_path) && !is_dir($file_path)) {
+    return false; // Let the web server serve the file directly
+}
+
 // Load global functions first
 require_once BASE_PATH . '/app/core/functions.php';
 
