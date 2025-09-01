@@ -202,14 +202,32 @@ function loadNotifications() {
             'X-CSRF-Token': window.App.csrfToken
         }
     })
-    .then(response => response.json())
+    .then(response => {
+        // Check if response is ok (status 200-299)
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
+        // Check if response is JSON
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+            throw new Error('Response is not JSON');
+        }
+        
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
             updateNotificationUI(data.data);
+        } else {
+            console.warn('Notifications API returned success=false:', data.error);
+            updateNotificationUI([]); // Show empty state
         }
     })
     .catch(error => {
-        console.error('Error loading notifications:', error);
+        console.error('Error loading notifications:', error.message);
+        // Fail silently - don't break the UI for notifications
+        updateNotificationUI([]);
     });
 }
 

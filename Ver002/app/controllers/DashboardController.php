@@ -363,4 +363,47 @@ class DashboardController extends Controller
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 
                strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
     }
+
+    public function notifications(): void
+    {
+        $this->requireAuth();
+        
+        // Always return JSON for this endpoint
+        header('Content-Type: application/json; charset=utf-8');
+        
+        try {
+            // Get recent notifications (for now we'll use recent activities)
+            $activities = $this->getRecentActivities();
+            
+            // Format as notifications
+            $notifications = array_map(function($activity) {
+                return [
+                    'id' => uniqid(),
+                    'type' => $activity['type'] ?? 'info',
+                    'title' => $activity['title'] ?? '',
+                    'message' => $activity['description'] ?? '',
+                    'icon' => $activity['icon'] ?? 'bell',
+                    'url' => $activity['url'] ?? null,
+                    'created_at' => $activity['date'] ?? date('Y-m-d H:i:s'),
+                    'read' => false
+                ];
+            }, array_slice($activities, 0, 10));
+            
+            $this->json([
+                'success' => true,
+                'data' => $notifications,
+                'count' => count($notifications),
+                'unread_count' => array_sum(array_column($notifications, 'read')) ? 0 : count($notifications)
+            ]);
+            
+        } catch (\Exception $e) {
+            error_log("Notifications API error: " . $e->getMessage());
+            
+            $this->json([
+                'success' => false,
+                'error' => 'Unable to load notifications',
+                'data' => []
+            ], 500);
+        }
+    }
 }

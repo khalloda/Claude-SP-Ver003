@@ -128,6 +128,7 @@ class Application
             $router->get('/settings/logs', 'SettingsController@logs');
             
             // AJAX endpoints
+            $router->get('/api/notifications', 'DashboardController@notifications');
             $router->get('/api/dropdowns/get-by-parent', 'DropdownController@getByParent');
             $router->get('/api/quotes/get-product-details', 'QuoteController@getProductDetails');
             $router->post('/api/quotes/convert-to-order', 'QuoteController@convertToOrder', ['middleware' => ['csrf']]);
