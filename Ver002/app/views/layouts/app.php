@@ -70,7 +70,7 @@
     <?php endif; ?>
     
     <!-- Loading Overlay -->
-    <div id="loading-overlay" class="loading-overlay">
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
         <div class="spinner-border text-primary" role="status">
             <span class="visually-hidden"><?= t('common.loading') ?></span>
         </div>

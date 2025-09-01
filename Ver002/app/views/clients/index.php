@@ -117,9 +117,13 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                         <div class="d-flex justify-content-between align-items-start">
                                             <div>
                                                 <h6 class="card-title mb-1">
-                                                    <a href="/clients/<?= $client->id ?>" class="text-decoration-none">
-                                                        <?= htmlspecialchars($client->display_name ?? $client->company_name ?? '') ?>
-                                                    </a>
+                                                    <?php if (!empty($client->id) && is_numeric($client->id)): ?>
+                                                        <a href="/clients/<?= $client->id ?>" class="text-decoration-none">
+                                                            <?= htmlspecialchars($client->display_name ?? $client->company_name ?? '') ?>
+                                                        </a>
+                                                    <?php else: ?>
+                                                        <?= htmlspecialchars($client->display_name ?? $client->company_name ?? 'Unknown Client') ?>
+                                                    <?php endif; ?>
                                                 </h6>
                                                 <div class="small text-muted mb-2">
                                                     <?php if ($client->is_active): ?>
@@ -135,6 +139,7 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
+                                                    <?php if (!empty($client->id) && is_numeric($client->id)): ?>
                                                     <li><a class="dropdown-item" href="/clients/<?= $client->id ?>">
                                                         <i class="fas fa-eye me-2"></i><?= t('common.view') ?>
                                                     </a></li>
@@ -158,6 +163,11 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                                     <li><a class="dropdown-item text-danger" href="#" onclick="deleteClient(<?= $client->id ?>, '<?= htmlspecialchars($client->display_name ?? $client->company_name ?? 'Unknown') ?>')">
                                                         <i class="fas fa-trash me-2"></i><?= t('common.delete') ?>
                                                     </a></li>
+                                                    <?php endif; ?>
+                                                    <?php else: ?>
+                                                    <li><span class="dropdown-item-text text-muted">
+                                                        <i class="fas fa-exclamation-triangle me-2"></i><?= t('messages.error.invalid_client_data') ?>
+                                                    </span></li>
                                                     <?php endif; ?>
                                                 </ul>
                                             </div>

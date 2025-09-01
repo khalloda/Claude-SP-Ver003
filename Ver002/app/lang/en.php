@@ -392,7 +392,8 @@ return [
             'login_failed' => 'Invalid email or password',
             'session_expired' => 'Your session has expired. Please login again.',
             'insufficient_stock' => 'Insufficient stock quantity',
-            'invalid_csrf' => 'Security token invalid. Please try again.'
+            'invalid_csrf' => 'Security token invalid. Please try again.',
+            'invalid_client_data' => 'Invalid client data'
         ],
         'confirm' => [
             'delete' => 'Are you sure you want to delete this item?',
