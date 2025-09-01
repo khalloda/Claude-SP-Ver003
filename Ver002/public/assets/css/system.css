@@ -332,19 +332,24 @@ a:hover {
 
 /* === Card-specific Colors === */
 .quotes-card {
-    background: var(--gradient-primary);
-    background-size: 100% 4px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: var(--bg);
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
 }
 
-.quotes-card:hover {
+.quotes-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
     background: var(--gradient-primary);
-    background-size: 100% 6px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: var(--bg);
+    transition: height var(--transition-base);
+}
+
+.quotes-card:hover::before {
+    height: 6px;
 }
 
 .quotes-icon {
@@ -352,19 +357,24 @@ a:hover {
 }
 
 .orders-card {
-    background: var(--gradient-success);
-    background-size: 100% 4px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: var(--bg);
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
 }
 
-.orders-card:hover {
+.orders-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
     background: var(--gradient-success);
-    background-size: 100% 6px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: var(--bg);
+    transition: height var(--transition-base);
+}
+
+.orders-card:hover::before {
+    height: 6px;
 }
 
 .orders-icon {
@@ -372,19 +382,24 @@ a:hover {
 }
 
 .invoices-card {
-    background: var(--gradient-info);
-    background-size: 100% 4px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: var(--bg);
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
 }
 
-.invoices-card:hover {
+.invoices-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
     background: var(--gradient-info);
-    background-size: 100% 6px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: var(--bg);
+    transition: height var(--transition-base);
+}
+
+.invoices-card:hover::before {
+    height: 6px;
 }
 
 .invoices-icon {
@@ -392,19 +407,24 @@ a:hover {
 }
 
 .revenue-card {
-    background: var(--gradient-warning);
-    background-size: 100% 4px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: var(--bg);
+    background: var(--bg);
+    position: relative;
+    overflow: hidden;
 }
 
-.revenue-card:hover {
+.revenue-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
     background: var(--gradient-warning);
-    background-size: 100% 6px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: var(--bg);
+    transition: height var(--transition-base);
+}
+
+.revenue-card:hover::before {
+    height: 6px;
 }
 
 .revenue-icon {

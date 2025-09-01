@@ -23,9 +23,16 @@ class DashboardController extends Controller
     {
         $this->requireAuth();
 
+        $chartData = $this->getChartData();
+        
         $data = [
             'stats' => $this->getDashboardStats(),
-            'charts' => $this->getChartData(),
+            'chart_data' => [
+                'revenue_labels' => array_column($chartData['monthly_revenue'], 'month'),
+                'revenue_data' => array_column($chartData['monthly_revenue'], 'revenue'),
+                'status_labels' => array_column($chartData['quote_status'], 'label'),
+                'status_data' => array_column($chartData['quote_status'], 'count')
+            ],
             'recent_activities' => $this->getRecentActivities(),
             'low_stock_products' => $this->getLowStockProducts(),
             'pending_quotes' => $this->getPendingQuotes(),
