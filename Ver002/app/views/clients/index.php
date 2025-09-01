@@ -5,15 +5,15 @@
  * Layout: Uses app layout with responsive design
  */
 
-$this->layout('layouts/app', [
-    'title' => $page_title ?? t('nav.clients'),
-    'active_nav' => 'clients'
-]);
+$page_title = $page_title ?? t('nav.clients');
+$active_nav = 'clients';
+ob_start();
 
-$currentUser = $this->getCurrentUser();
-$canCreate = $this->hasRole(['admin', 'manager', 'sales']);
-$canEdit = $this->hasRole(['admin', 'manager', 'sales']);
-$canDelete = $this->hasRole(['admin', 'manager']);
+// Get current user from session or passed data
+$currentUser = $current_user ?? ($_SESSION['user'] ?? null);
+$canCreate = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'sales']);
+$canEdit = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'sales']);
+$canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager']);
 ?>
 
 <div class="container-fluid">
@@ -118,15 +118,14 @@ $canDelete = $this->hasRole(['admin', 'manager']);
                                             <div>
                                                 <h6 class="card-title mb-1">
                                                     <a href="/clients/<?= $client->id ?>" class="text-decoration-none">
-                                                        <?= htmlspecialchars($client->name) ?>
+                                                        <?= htmlspecialchars($client->display_name ?? $client->company_name ?? '') ?>
                                                     </a>
                                                 </h6>
                                                 <div class="small text-muted mb-2">
-                                                    <?= t('clients.type.' . $client->type) ?>
                                                     <?php if ($client->is_active): ?>
-                                                        <span class="badge bg-success ms-2"><?= t('common.active') ?></span>
+                                                        <span class="badge bg-success"><?= t('common.active') ?></span>
                                                     <?php else: ?>
-                                                        <span class="badge bg-secondary ms-2"><?= t('common.inactive') ?></span>
+                                                        <span class="badge bg-secondary"><?= t('common.inactive') ?></span>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
@@ -156,7 +155,7 @@ $canDelete = $this->hasRole(['admin', 'manager']);
                                                     </a></li>
                                                     <?php if ($canDelete): ?>
                                                     <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteClient(<?= $client->id ?>, '<?= htmlspecialchars($client->name) ?>')">
+                                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteClient(<?= $client->id ?>, '<?= htmlspecialchars($client->display_name ?? $client->company_name ?? 'Unknown') ?>')">
                                                         <i class="fas fa-trash me-2"></i><?= t('common.delete') ?>
                                                     </a></li>
                                                     <?php endif; ?>
@@ -167,8 +166,8 @@ $canDelete = $this->hasRole(['admin', 'manager']);
                                         <?php if ($client->email): ?>
                                         <div class="small mb-2">
                                             <i class="fas fa-envelope text-muted me-2"></i>
-                                            <a href="mailto:<?= htmlspecialchars($client->email) ?>" class="text-decoration-none">
-                                                <?= htmlspecialchars($client->email) ?>
+                                            <a href="mailto:<?= htmlspecialchars($client->email ?? '') ?>" class="text-decoration-none">
+                                                <?= htmlspecialchars($client->email ?? '') ?>
                                             </a>
                                         </div>
                                         <?php endif; ?>
@@ -176,8 +175,8 @@ $canDelete = $this->hasRole(['admin', 'manager']);
                                         <?php if ($client->phone): ?>
                                         <div class="small mb-2">
                                             <i class="fas fa-phone text-muted me-2"></i>
-                                            <a href="tel:<?= htmlspecialchars($client->phone) ?>" class="text-decoration-none">
-                                                <?= htmlspecialchars($client->phone) ?>
+                                            <a href="tel:<?= htmlspecialchars($client->phone ?? '') ?>" class="text-decoration-none">
+                                                <?= htmlspecialchars($client->phone ?? '') ?>
                                             </a>
                                         </div>
                                         <?php endif; ?>
@@ -185,7 +184,7 @@ $canDelete = $this->hasRole(['admin', 'manager']);
                                         <?php if ($client->city || $client->country): ?>
                                         <div class="small mb-3">
                                             <i class="fas fa-map-marker-alt text-muted me-2"></i>
-                                            <?= htmlspecialchars(trim($client->city . ', ' . $client->country, ', ')) ?>
+                                            <?= htmlspecialchars(trim(($client->city ?? '') . ', ' . ($client->country ?? ''), ', ')) ?>
                                         </div>
                                         <?php endif; ?>
                                         
@@ -305,3 +304,8 @@ function deleteClient(clientId, clientName) {
     }
 }
 </script>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/app.php';
+?>
