@@ -21,8 +21,8 @@
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
-    <!-- Custom CSS -->
-    <link href="/assets/css/app.css" rel="stylesheet">
+    <!-- Unified Design System -->
+    <link href="/assets/css/system.css" rel="stylesheet">
     
     <?php if (\App\Core\I18n::isRtl()): ?>
     <!-- RTL Support -->
@@ -100,8 +100,8 @@
         };
     </script>
     
-    <!-- Custom JS -->
-    <script src="/assets/js/app.js"></script>
+    <!-- Unified System JS -->
+    <script src="/assets/js/system.js"></script>
     
     <!-- Additional JS -->
     <?php if (isset($additional_js)): ?>

@@ -60,7 +60,7 @@ $canDelete = $this->hasRole(['admin', 'manager']);
                         <?php if ($client->type === 'company'): ?>
                             <i class="fas fa-building"></i>
                         <?php else: ?>
-                            <?= strtoupper(substr($client->name, 0, 1)) ?>
+                            <?= strtoupper(substr($client->name ?? '', 0, 1)) ?>
                         <?php endif; ?>
                     </div>
                     

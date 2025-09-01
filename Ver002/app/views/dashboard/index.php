@@ -290,63 +290,33 @@ $canManageProducts = $currentUser && in_array($currentUser['role'] ?? '', ['admi
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Revenue Chart
+document.addEventListener('app:initialized', function() {
+    // Revenue Chart using unified system
     if (document.getElementById('revenueChart')) {
         const ctx = document.getElementById('revenueChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: <?= json_encode($chart_data['revenue_labels'] ?? []) ?>,
-                datasets: [{
-                    label: '<?= t('dashboard.revenue') ?>',
-                    data: <?= json_encode($chart_data['revenue_data'] ?? []) ?>,
-                    borderColor: 'rgb(75, 192, 192)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
-                    tension: 0.1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: true
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+        const data = {
+            labels: <?= json_encode($chart_data['revenue_labels'] ?? []) ?>,
+            datasets: [{
+                label: '<?= t('dashboard.revenue') ?>',
+                data: <?= json_encode($chart_data['revenue_data'] ?? []) ?>
+            }]
+        };
+        App.charts.createLine(ctx, data);
     }
 
-    // Status Distribution Chart
+    // Status Distribution Chart using unified system
     if (document.getElementById('statusChart')) {
         const ctx2 = document.getElementById('statusChart').getContext('2d');
-        new Chart(ctx2, {
-            type: 'doughnut',
-            data: {
-                labels: <?= json_encode($chart_data['status_labels'] ?? []) ?>,
-                datasets: [{
-                    data: <?= json_encode($chart_data['status_data'] ?? []) ?>,
-                    backgroundColor: [
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 205, 86)',
-                        'rgb(255, 99, 132)',
-                        'rgb(75, 192, 192)'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
+        const data = {
+            labels: <?= json_encode($chart_data['status_labels'] ?? []) ?>,
+            datasets: [{
+                data: <?= json_encode($chart_data['status_data'] ?? []) ?>
+            }]
+        };
+        App.charts.createDoughnut(ctx2, data, {
+            plugins: {
+                legend: {
+                    position: 'bottom'
                 }
             }
         });
@@ -354,208 +324,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<style>
-/* Modern Statistics Cards */
-.modern-stat-card {
-    background: white;
-    border: none;
-    border-radius: 16px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    position: relative;
-    height: 100%;
-}
-
-.modern-stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
-
-.modern-stat-card .card-body {
-    padding: 1.5rem;
-    position: relative;
-}
-
-/* Icon Styling */
-.stat-icon {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 1rem;
-    position: relative;
-    flex-shrink: 0;
-}
-
-.stat-icon i {
-    font-size: 28px;
-    color: white;
-    z-index: 2;
-}
-
-/* Content Styling */
-.stat-content {
-    flex: 1;
-}
-
-.stat-value {
-    font-size: 2.25rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 0.25rem;
-    color: #1a1a1a;
-}
-
-.stat-label {
-    font-size: 0.875rem;
-    color: #64748B;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.stat-trend {
-    font-size: 0.75rem;
-}
-
-/* Card-specific Colors */
-.quotes-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    background-size: 100% 4px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: white;
-}
-
-.quotes-card:hover {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    background-size: 100% 6px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: white;
-}
-
-.quotes-icon {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.orders-card {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    background-size: 100% 4px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: white;
-}
-
-.orders-card:hover {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-    background-size: 100% 6px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: white;
-}
-
-.orders-icon {
-    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-}
-
-.invoices-card {
-    background: linear-gradient(135deg, #3093e3 0%, #2dd1ac 100%);
-    background-size: 100% 4px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: white;
-}
-
-.invoices-card:hover {
-    background: linear-gradient(135deg, #3093e3 0%, #2dd1ac 100%);
-    background-size: 100% 6px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: white;
-}
-
-.invoices-icon {
-    background: linear-gradient(135deg, #3093e3 0%, #2dd1ac 100%);
-}
-
-.revenue-card {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    background-size: 100% 4px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: white;
-}
-
-.revenue-card:hover {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    background-size: 100% 6px;
-    background-repeat: no-repeat;
-    background-position: bottom;
-    background-color: white;
-}
-
-.revenue-icon {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .modern-stat-card .card-body {
-        padding: 1.25rem;
-    }
-    
-    .stat-icon {
-        width: 56px;
-        height: 56px;
-        margin-right: 0.75rem;
-    }
-    
-    .stat-icon i {
-        font-size: 24px;
-    }
-    
-    .stat-value {
-        font-size: 1.875rem;
-    }
-    
-    .stat-label {
-        font-size: 0.8125rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .modern-stat-card .card-body {
-        padding: 1rem;
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .stat-icon {
-        margin-right: 0;
-        margin-bottom: 0.75rem;
-        align-self: center;
-    }
-    
-    .stat-content {
-        text-align: center;
-    }
-}
-
-/* Animation for counters */
-@keyframes countUp {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.stat-value {
-    animation: countUp 0.6s ease-out;
-}
-</style>
 
 <?php
 $content = ob_get_clean();

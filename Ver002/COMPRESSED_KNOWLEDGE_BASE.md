@@ -19,7 +19,7 @@
 ### **Production Database** 
 ```
 Host: p3nlmysql13plsk.secureserver.net
-Port: 3066
+Port: 3306
 Database: claudecode_mi  
 User: sp
 Password: Mi@SP@123

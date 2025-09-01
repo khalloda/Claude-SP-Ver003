@@ -64,8 +64,8 @@ class Payment extends Model
                            ->orderBy('id', 'DESC')
                            ->first();
         
-        if ($lastPayment) {
-            $lastNumber = (int)substr($lastPayment->payment_number, -4);
+        if ($lastPayment && $lastPayment->payment_number) {
+            $lastNumber = (int)substr($lastPayment->payment_number ?? '', -4);
             $nextNumber = $lastNumber + 1;
         } else {
             $nextNumber = 1;

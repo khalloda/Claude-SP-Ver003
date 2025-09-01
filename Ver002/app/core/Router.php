@@ -157,8 +157,12 @@ class Router
             $value = $matches[$index] ?? null;
             
             if ($name === 'id' && $value !== null) {
+                // Check if the value is numeric before validation
+                if (!is_numeric($value)) {
+                    throw new \InvalidArgumentException("Invalid ID parameter: " . htmlspecialchars($value));
+                }
                 $params[$name] = filter_var($value, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
-                if ($params[$name] === null) {
+                if ($params[$name] === null || $params[$name] <= 0) {
                     throw new \InvalidArgumentException("Invalid ID parameter: " . htmlspecialchars($value));
                 }
             } else {

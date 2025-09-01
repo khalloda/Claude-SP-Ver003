@@ -1,13 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)",
-      "Bash(php:*)",
+      "Bash(git checkout:*)",
       "Bash(find:*)",
-      "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Read(/D:\\/**)"
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

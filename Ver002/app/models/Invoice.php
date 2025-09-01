@@ -67,8 +67,8 @@ class Invoice extends Model
                            ->orderBy('id', 'DESC')
                            ->first();
         
-        if ($lastInvoice) {
-            $lastNumber = (int)substr($lastInvoice->invoice_number, -4);
+        if ($lastInvoice && $lastInvoice->invoice_number) {
+            $lastNumber = (int)substr($lastInvoice->invoice_number ?? '', -4);
             $nextNumber = $lastNumber + 1;
         } else {
             $nextNumber = 1;
