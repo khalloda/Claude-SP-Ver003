@@ -40,22 +40,19 @@ $canManageProducts = $currentUser && in_array($currentUser['role'] ?? '', ['admi
         </div>
     </div>
 
-    <!-- Modern Statistics Cards -->
-    <div class="row mb-4 g-3">
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
         <!-- Quotes Card -->
-        <div class="col-xl-3 col-md-6">
-            <div class="modern-stat-card quotes-card">
-                <div class="card-body d-flex align-items-center">
-                    <div class="stat-icon quotes-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-value"><?= number_format($stats['pending_quotes'] ?? 0) ?></div>
-                        <div class="stat-label"><?= t('nav.quotes') ?></div>
-                        <div class="stat-trend">
-                            <small class="text-muted">
-                                <i class="fas fa-arrow-up text-success"></i> +12% <?= t('dashboard.this_month') ?>
-                            </small>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><?= t('dashboard.pending_quotes') ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($stats['pending_quotes'] ?? 0) ?></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-file-alt fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -63,39 +60,37 @@ $canManageProducts = $currentUser && in_array($currentUser['role'] ?? '', ['admi
         </div>
         
         <!-- Sales Orders Card -->
-        <div class="col-xl-3 col-md-6">
-            <div class="modern-stat-card orders-card">
-                <div class="card-body d-flex align-items-center">
-                    <div class="stat-icon orders-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-value"><?= number_format($stats['total_clients'] ?? 0) ?></div>
-                        <div class="stat-label"><?= t('nav.sales_orders') ?></div>
-                        <div class="stat-trend">
-                            <small class="text-muted">
-                                <i class="fas fa-arrow-up text-success"></i> +8% <?= t('dashboard.this_month') ?>
-                            </small>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1"><?= t('dashboard.total_clients') ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($stats['total_clients'] ?? 0) ?></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Invoices Card -->
-        <div class="col-xl-3 col-md-6">
-            <div class="modern-stat-card invoices-card">
-                <div class="card-body d-flex align-items-center">
-                    <div class="stat-icon invoices-icon">
-                        <i class="fas fa-file-invoice-dollar"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-value"><?= number_format($stats['total_products'] ?? 0) ?></div>
-                        <div class="stat-label"><?= t('nav.invoices') ?></div>
-                        <div class="stat-trend">
-                            <small class="text-muted">
-                                <i class="fas fa-arrow-down text-danger"></i> -3% <?= t('dashboard.this_month') ?>
-                            </small>
+        <!-- Products Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><?= t('dashboard.total_products') ?></div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?= number_format($stats['total_products'] ?? 0) ?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-boxes fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -103,19 +98,16 @@ $canManageProducts = $currentUser && in_array($currentUser['role'] ?? '', ['admi
         </div>
         
         <!-- Total Revenue Card -->
-        <div class="col-xl-3 col-md-6">
-            <div class="modern-stat-card revenue-card">
-                <div class="card-body d-flex align-items-center">
-                    <div class="stat-icon revenue-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="stat-content">
-                        <div class="stat-value">$<?= number_format($stats['this_month_revenue'] ?? 0, 2) ?></div>
-                        <div class="stat-label"><?= t('dashboard.total_revenue') ?></div>
-                        <div class="stat-trend">
-                            <small class="text-muted">
-                                <i class="fas fa-arrow-up text-success"></i> +24% <?= t('dashboard.this_month') ?>
-                            </small>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"><?= t('dashboard.total_revenue') ?></div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$<?= number_format($stats['this_month_revenue'] ?? 0, 2) ?></div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
