@@ -103,6 +103,9 @@ abstract class Model
     {
         $sql = "SELECT * FROM " . static::getTable() . " ORDER BY " . static::$primaryKey;
         
+        // Debug logging
+        error_log("Model::all() - SQL: " . $sql);
+        
         try {
             $stmt = Database::getInstance()->prepare($sql);
             $stmt->execute();
@@ -113,6 +116,12 @@ abstract class Model
                 $instance->exists = true;
                 $instance->original = $row;
                 $results[] = $instance;
+            }
+            
+            // Debug logging
+            error_log("Model::all() - Found " . count($results) . " records for table " . static::getTable());
+            if (!empty($results)) {
+                error_log("Model::all() - First row: " . print_r($results[0]->attributes, true));
             }
             
             return $results;
@@ -236,12 +245,17 @@ abstract class Model
 
     public function fill(array $attributes): self
     {
+        // Debug: Log what we're trying to fill
+        error_log("Model::fill() for " . static::class . " - Attributes: " . print_r($attributes, true));
+        error_log("Model::fill() - Fillable: " . print_r(static::$fillable, true));
+        
         foreach ($attributes as $key => $value) {
             if (in_array($key, static::$fillable) || empty(static::$fillable)) {
                 $this->attributes[$key] = $this->castAttribute($key, $value);
             }
         }
 
+        error_log("Model::fill() - Final attributes: " . print_r($this->attributes, true));
         return $this;
     }
 

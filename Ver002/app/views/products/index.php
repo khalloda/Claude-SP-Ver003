@@ -158,6 +158,7 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                             <?php 
                                             $productId = $product->attributes['id'] ?? $product->id ?? null;
                                             ?>
+                                            <!-- DEBUG PRODUCT FULL: <?= htmlspecialchars(print_r($product, true)) ?> -->
                                             <!-- DEBUG PRODUCT: ID=<?= htmlspecialchars($productId ?? 'NULL') ?>, Type=<?= gettype($productId) ?>, Name=<?= htmlspecialchars($product->name ?? 'NULL') ?> -->
                                             <li><a class="dropdown-item" href="/products/<?= $productId ?: 'INVALID' ?>">
                                                 <i class="fas fa-eye me-2"></i><?= t('common.view') ?>

@@ -5,7 +5,8 @@
       "Bash(find:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(php tests:*)"
+      "Bash(php tests:*)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []
