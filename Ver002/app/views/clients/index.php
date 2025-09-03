@@ -117,8 +117,11 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                         <div class="d-flex justify-content-between align-items-start">
                                             <div>
                                                 <h6 class="card-title mb-1">
-                                                    <?php if (!empty($client->id) && is_numeric($client->id)): ?>
-                                                        <a href="/clients/<?= $client->id ?>" class="text-decoration-none">
+                                                    <?php 
+                                                    $clientId = $client->attributes['id'] ?? $client->id ?? null;
+                                                    if ($clientId && $clientId > 0): 
+                                                    ?>
+                                                        <a href="/clients/<?= $clientId ?>" class="text-decoration-none">
                                                             <?= htmlspecialchars($client->display_name ?? $client->company_name ?? '') ?>
                                                         </a>
                                                     <?php else: ?>
@@ -139,12 +142,15 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <?php if (!empty($client->id) && is_numeric($client->id)): ?>
-                                                    <li><a class="dropdown-item" href="/clients/<?= $client->id ?>">
+                                                    <?php 
+                                                    $clientId = $client->attributes['id'] ?? $client->id ?? null;
+                                                    if ($clientId && $clientId > 0): 
+                                                    ?>
+                                                    <li><a class="dropdown-item" href="/clients/<?= $clientId ?>">
                                                         <i class="fas fa-eye me-2"></i><?= t('common.view') ?>
                                                     </a></li>
                                                     <?php if ($canEdit): ?>
-                                                    <li><a class="dropdown-item" href="/clients/<?= $client->id ?>/edit">
+                                                    <li><a class="dropdown-item" href="/clients/<?= $clientId ?>/edit">
                                                         <i class="fas fa-edit me-2"></i><?= t('common.edit') ?>
                                                     </a></li>
                                                     <?php endif; ?>

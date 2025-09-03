@@ -55,7 +55,7 @@ class ProductController extends Controller
         }
 
         $categories = Dropdown::getCategories() ?? [];
-
+        
         $this->view('products/index', [
             'products' => $products ?? [],
             'categories' => $categories,

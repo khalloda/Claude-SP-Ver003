@@ -260,6 +260,7 @@ return [
     'clients' => [
         'client' => 'Client',
         'create_client' => 'Create Client',
+		'add_client' => 'Add Client',
         'create_new_client' => 'Create New Client',
         'basic_information' => 'Basic Information',
         'contact_information' => 'Contact Information',
@@ -333,6 +334,7 @@ return [
         ],
         'discount_percentage' => 'Discount %',
         'total_sales' => 'Total Sales',
+		'total_value' => 'Total Value',
         'outstanding_balance' => 'Outstanding Balance',
         'available_credit' => 'Available Credit'
     ],
@@ -405,7 +407,8 @@ return [
             'session_expired' => 'Your session has expired. Please login again.',
             'insufficient_stock' => 'Insufficient stock quantity',
             'invalid_csrf' => 'Security token invalid. Please try again.',
-            'invalid_client_data' => 'Invalid client data'
+            'invalid_client_data' => 'Invalid client data',
+            'invalid_product_data' => 'Invalid product data'
         ],
         'confirm' => [
             'delete' => 'Are you sure you want to delete this item?',

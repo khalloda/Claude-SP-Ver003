@@ -138,9 +138,16 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                             <div class="card-body d-flex flex-column">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <h6 class="card-title mb-0">
-                                        <a href="/products/<?= $product->id ?>" class="text-decoration-none">
-                                            <?= htmlspecialchars($product->name) ?>
-                                        </a>
+                                        <?php 
+                                        $productId = $product->attributes['id'] ?? $product->id ?? null;
+                                        if ($productId && $productId > 0): 
+                                        ?>
+                                            <a href="/products/<?= $productId ?>" class="text-decoration-none">
+                                                <?= htmlspecialchars($product->name ?? '') ?>
+                                            </a>
+                                        <?php else: ?>
+                                            <?= htmlspecialchars($product->name ?? 'Unknown Product') ?>
+                                        <?php endif; ?>
                                     </h6>
                                     
                                     <div class="dropdown">
@@ -148,22 +155,31 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                             <i class="fas fa-ellipsis-v"></i>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="/products/<?= $product->id ?>">
+                                            <?php 
+                                            $productId = $product->attributes['id'] ?? $product->id ?? null;
+                                            if ($productId && $productId > 0): 
+                                            ?>
+                                            <li><a class="dropdown-item" href="/products/<?= $productId ?>">
                                                 <i class="fas fa-eye me-2"></i><?= t('common.view') ?>
                                             </a></li>
                                             <?php if ($canEdit): ?>
-                                            <li><a class="dropdown-item" href="/products/<?= $product->id ?>/edit">
+                                            <li><a class="dropdown-item" href="/products/<?= $productId ?>/edit">
                                                 <i class="fas fa-edit me-2"></i><?= t('common.edit') ?>
                                             </a></li>
                                             <?php endif; ?>
-                                            <li><a class="dropdown-item" href="/products/<?= $product->id ?>/duplicate">
+                                            <li><a class="dropdown-item" href="/products/<?= $productId ?>/duplicate">
                                                 <i class="fas fa-copy me-2"></i><?= t('common.duplicate') ?>
                                             </a></li>
                                             <?php if ($canDelete): ?>
                                             <li><hr class="dropdown-divider"></li>
-                                            <li><a class="dropdown-item text-danger" href="#" onclick="deleteProduct(<?= $product->id ?>, '<?= htmlspecialchars($product->name) ?>')">
+                                            <li><a class="dropdown-item text-danger" href="#" onclick="deleteProduct(<?= $productId ?>, '<?= htmlspecialchars($product->name ?? '') ?>')">
                                                 <i class="fas fa-trash me-2"></i><?= t('common.delete') ?>
                                             </a></li>
+                                            <?php endif; ?>
+                                            <?php else: ?>
+                                            <li><span class="dropdown-item-text text-muted">
+                                                <i class="fas fa-exclamation-triangle me-2"></i><?= t('messages.error.invalid_product_data') ?>
+                                            </span></li>
                                             <?php endif; ?>
                                         </ul>
                                     </div>
@@ -291,13 +307,17 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                     <?php endif; ?>
                                 </td>
                                 <td class="text-end">
+                                    <?php 
+                                    $productId = $product->attributes['id'] ?? $product->id ?? null;
+                                    if ($productId && $productId > 0): 
+                                    ?>
                                     <div class="btn-group">
-                                        <a href="/products/<?= $product->id ?>" class="btn btn-sm btn-outline-primary" title="<?= t('common.view') ?>">
+                                        <a href="/products/<?= $productId ?>" class="btn btn-sm btn-outline-primary" title="<?= t('common.view') ?>">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         
                                         <?php if ($canEdit): ?>
-                                        <a href="/products/<?= $product->id ?>/edit" class="btn btn-sm btn-outline-secondary" title="<?= t('common.edit') ?>">
+                                        <a href="/products/<?= $productId ?>/edit" class="btn btn-sm btn-outline-secondary" title="<?= t('common.edit') ?>">
                                             <i class="fas fa-edit"></i>
                                         </a>
                                         <?php endif; ?>
@@ -319,13 +339,18 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                                 
                                                 <?php if ($canDelete): ?>
                                                 <li><hr class="dropdown-divider"></li>
-                                                <li><a class="dropdown-item text-danger" href="#" onclick="deleteProduct(<?= $product->id ?>, '<?= htmlspecialchars($product->name) ?>')">
+                                                <li><a class="dropdown-item text-danger" href="#" onclick="deleteProduct(<?= $product->id ?>, '<?= htmlspecialchars($product->name ?? '') ?>')">
                                                     <i class="fas fa-trash me-2"></i><?= t('common.delete') ?>
                                                 </a></li>
                                                 <?php endif; ?>
                                             </ul>
                                         </div>
                                     </div>
+                                    <?php else: ?>
+                                    <span class="text-muted small">
+                                        <i class="fas fa-exclamation-triangle me-1"></i><?= t('messages.error.invalid_product_data') ?>
+                                    </span>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
