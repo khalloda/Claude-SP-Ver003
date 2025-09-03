@@ -14,7 +14,7 @@
                     <i class="fas fa-cogs me-2 text-primary"></i>
                     <small class="text-muted">
                         <strong><?= htmlspecialchars($app_name ?? 'MISP Ver002') ?></strong> v2.0.0 
-                        | <?= t('common.powered_by') ?> <a href="#" class="text-decoration-none">Claude AI</a>
+                        | <?= t('common.powered_by') ?> <a href="#" class="text-decoration-none">KHelmy Designs</a>
                     </small>
                 </div>
             </div>

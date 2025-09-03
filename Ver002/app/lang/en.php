@@ -116,7 +116,7 @@ return [
         'overview' => 'Overview',
         'stats' => 'Statistics',
         'total_products' => 'Total Products',
-        'total_clients' => 'Total Clients',
+        'total_clients' => 'Total Clients', 
         'pending_quotes' => 'Pending Quotes',
         'monthly_sales' => 'Monthly Sales',
         'low_stock_items' => 'Low Stock Items',
