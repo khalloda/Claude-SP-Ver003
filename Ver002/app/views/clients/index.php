@@ -144,36 +144,31 @@ $canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'man
                                                 <ul class="dropdown-menu">
                                                     <?php 
                                                     $clientId = $client->attributes['id'] ?? $client->id ?? null;
-                                                    if ($clientId && $clientId > 0): 
                                                     ?>
-                                                    <li><a class="dropdown-item" href="/clients/<?= $clientId ?>">
+                                                    <!-- DEBUG CLIENT: ID=<?= htmlspecialchars($clientId ?? 'NULL') ?>, Type=<?= gettype($clientId) ?>, Name=<?= htmlspecialchars($client->display_name ?? $client->company_name ?? 'NULL') ?> -->
+                                                    <li><a class="dropdown-item" href="/clients/<?= $clientId ?: 'INVALID' ?>">
                                                         <i class="fas fa-eye me-2"></i><?= t('common.view') ?>
                                                     </a></li>
                                                     <?php if ($canEdit): ?>
-                                                    <li><a class="dropdown-item" href="/clients/<?= $clientId ?>/edit">
+                                                    <li><a class="dropdown-item" href="/clients/<?= $clientId ?: 'INVALID' ?>/edit">
                                                         <i class="fas fa-edit me-2"></i><?= t('common.edit') ?>
                                                     </a></li>
                                                     <?php endif; ?>
                                                     <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item" href="/quotes/create?client_id=<?= $client->id ?>">
+                                                    <li><a class="dropdown-item" href="/quotes/create?client_id=<?= $clientId ?: 0 ?>">
                                                         <i class="fas fa-file-alt me-2"></i><?= t('quotes.create_quote') ?>
                                                     </a></li>
-                                                    <li><a class="dropdown-item" href="/sales-orders/create?client_id=<?= $client->id ?>">
+                                                    <li><a class="dropdown-item" href="/sales-orders/create?client_id=<?= $clientId ?: 0 ?>">
                                                         <i class="fas fa-shopping-cart me-2"></i><?= t('sales_orders.create_order') ?>
                                                     </a></li>
-                                                    <li><a class="dropdown-item" href="/invoices/create?client_id=<?= $client->id ?>">
+                                                    <li><a class="dropdown-item" href="/invoices/create?client_id=<?= $clientId ?: 0 ?>">
                                                         <i class="fas fa-file-invoice me-2"></i><?= t('invoices.create_invoice') ?>
                                                     </a></li>
                                                     <?php if ($canDelete): ?>
                                                     <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteClient(<?= $client->id ?>, '<?= htmlspecialchars($client->display_name ?? $client->company_name ?? 'Unknown') ?>')">
+                                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteClient(<?= $clientId ?: 0 ?>, '<?= htmlspecialchars($client->display_name ?? $client->company_name ?? 'Unknown') ?>')">
                                                         <i class="fas fa-trash me-2"></i><?= t('common.delete') ?>
                                                     </a></li>
-                                                    <?php endif; ?>
-                                                    <?php else: ?>
-                                                    <li><span class="dropdown-item-text text-muted">
-                                                        <i class="fas fa-exclamation-triangle me-2"></i><?= t('messages.error.invalid_client_data') ?>
-                                                    </span></li>
                                                     <?php endif; ?>
                                                 </ul>
                                             </div>
