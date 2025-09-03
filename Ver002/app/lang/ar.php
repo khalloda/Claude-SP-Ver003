@@ -49,6 +49,8 @@ return [
         'all_countries' => 'جميع البلدان',
         'all_types' => 'جميع الأنواع', 
         'all_statuses' => 'جميع الحالات',
+        'all_categories' => 'جميع الفئات',
+        'all_suppliers' => 'جميع الموردين',
         'none' => 'لا شيء',
         'required' => 'مطلوب',
         'optional' => 'اختياري',

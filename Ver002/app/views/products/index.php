@@ -5,15 +5,15 @@
  * Layout: Uses app layout with advanced filtering and grid view
  */
 
-$this->layout('layouts/app', [
-    'title' => $page_title ?? t('nav.products'),
-    'active_nav' => 'products'
-]);
+$page_title = $page_title ?? t('nav.products');
+$active_nav = 'products';
+ob_start();
 
-$currentUser = $this->getCurrentUser();
-$canCreate = $this->hasRole(['admin', 'manager', 'inventory']);
-$canEdit = $this->hasRole(['admin', 'manager', 'inventory']);
-$canDelete = $this->hasRole(['admin', 'manager']);
+// Get current user from passed data
+$currentUser = $current_user ?? null;
+$canCreate = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'inventory']);
+$canEdit = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'inventory']);
+$canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager']);
 ?>
 
 <div class="container-fluid">
@@ -177,36 +177,48 @@ $canDelete = $this->hasRole(['admin', 'manager']);
                                 
                                 <div class="mt-auto">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <strong class="text-primary"><?= number_format($product->price, 2) ?> <?= $product->currency ?? 'USD' ?></strong>
+                                        <strong class="text-primary">$<?= number_format($product->selling_price ?? 0, 2) ?></strong>
                                         
                                         <?php
                                         $stockClass = 'text-success';
                                         $stockIcon = 'fa-check-circle';
-                                        if ($product->stock_quantity <= 0) {
+                                        if (($product->stock_quantity ?? 0) <= 0) {
                                             $stockClass = 'text-danger';
                                             $stockIcon = 'fa-times-circle';
-                                        } elseif ($product->stock_quantity <= ($product->low_stock_threshold ?? 10)) {
+                                        } elseif (($product->stock_quantity ?? 0) <= ($product->min_stock_level ?? 10)) {
                                             $stockClass = 'text-warning';
                                             $stockIcon = 'fa-exclamation-triangle';
                                         }
                                         ?>
                                         <span class="<?= $stockClass ?>">
                                             <i class="fas <?= $stockIcon ?> me-1"></i>
-                                            <?= $product->stock_quantity ?> <?= htmlspecialchars($product->unit ?? 'pcs') ?>
+                                            <?= $product->stock_quantity ?? 0 ?> <?= htmlspecialchars($product->unit_of_measure ?? 'pcs') ?>
                                         </span>
                                     </div>
                                     
                                     <div class="d-flex justify-content-between align-items-center">
                                         <small class="text-muted">
-                                            <?php if ($product->is_active): ?>
+                                            <?php if (($product->status ?? 0) === 1): ?>
                                                 <span class="badge bg-success"><?= t('common.active') ?></span>
                                             <?php else: ?>
                                                 <span class="badge bg-secondary"><?= t('common.inactive') ?></span>
                                             <?php endif; ?>
                                         </small>
                                         
-                                        <?php if ($product->category_name): ?>
-                                        <small class="text-muted"><?= htmlspecialchars($product->category_name) ?></small>
+                                        <?php 
+                                        // Get category name if category exists
+                                        $categoryName = '';
+                                        if (!empty($product->category_id)) {
+                                            foreach ($categories as $category) {
+                                                if ($category->id == $product->category_id) {
+                                                    $categoryName = $category->name;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                        <?php if ($categoryName): ?>
+                                        <small class="text-muted"><?= htmlspecialchars($categoryName) ?></small>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -251,28 +263,28 @@ $canDelete = $this->hasRole(['admin', 'manager']);
                                         <?php endif; ?>
                                     </div>
                                 </td>
-                                <td><code><?= htmlspecialchars($product->sku) ?></code></td>
-                                <td><?= htmlspecialchars($product->category_name ?? '-') ?></td>
-                                <td><strong><?= number_format($product->price, 2) ?> <?= $product->currency ?? 'USD' ?></strong></td>
+                                <td><code><?= htmlspecialchars($product->sku ?? '') ?></code></td>
+                                <td><?= htmlspecialchars($categoryName) ?></td>
+                                <td><strong>$<?= number_format($product->selling_price ?? 0, 2) ?></strong></td>
                                 <td>
                                     <?php
                                     $stockClass = 'text-success';
                                     $stockIcon = 'fa-check-circle';
-                                    if ($product->stock_quantity <= 0) {
+                                    if (($product->stock_quantity ?? 0) <= 0) {
                                         $stockClass = 'text-danger';
                                         $stockIcon = 'fa-times-circle';
-                                    } elseif ($product->stock_quantity <= ($product->low_stock_threshold ?? 10)) {
+                                    } elseif (($product->stock_quantity ?? 0) <= ($product->min_stock_level ?? 10)) {
                                         $stockClass = 'text-warning';
                                         $stockIcon = 'fa-exclamation-triangle';
                                     }
                                     ?>
                                     <span class="<?= $stockClass ?>">
                                         <i class="fas <?= $stockIcon ?> me-1"></i>
-                                        <?= $product->stock_quantity ?> <?= htmlspecialchars($product->unit ?? 'pcs') ?>
+                                        <?= $product->stock_quantity ?? 0 ?> <?= htmlspecialchars($product->unit_of_measure ?? 'pcs') ?>
                                     </span>
                                 </td>
                                 <td>
-                                    <?php if ($product->is_active): ?>
+                                    <?php if (($product->status ?? 0) === 1): ?>
                                         <span class="badge bg-success"><?= t('common.active') ?></span>
                                     <?php else: ?>
                                         <span class="badge bg-secondary"><?= t('common.inactive') ?></span>
@@ -371,3 +383,8 @@ function deleteProduct(productId, productName) {
     }
 }
 </script>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/app.php';
+?>

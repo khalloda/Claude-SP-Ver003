@@ -54,16 +54,17 @@ class ProductController extends Controller
             });
         }
 
-        $categories = Dropdown::getCategories();
+        $categories = Dropdown::getCategories() ?? [];
 
         $this->view('products/index', [
-            'products' => $products,
+            'products' => $products ?? [],
             'categories' => $categories,
             'search' => $search,
             'category' => $category,
             'status' => $status,
             'stock_filter' => $stock_filter,
-            'page_title' => t('nav.products')
+            'page_title' => t('nav.products'),
+            'current_user' => $this->getCurrentUser()
         ]);
     }
 
