@@ -56,17 +56,6 @@ class ProductController extends Controller
 
         $categories = Dropdown::getCategories() ?? [];
         
-        // Debug: Check what we actually have
-        error_log("ProductController: Total products found: " . count($products));
-        if (!empty($products)) {
-            $firstProduct = $products[0];
-            error_log("First product class: " . get_class($firstProduct));
-            error_log("First product object dump: " . print_r($firstProduct, true));
-            if (isset($firstProduct->attributes)) {
-                error_log("First product attributes: " . print_r($firstProduct->attributes, true));
-            }
-        }
-        
         $this->view('products/index', [
             'products' => $products ?? [],
             'categories' => $categories,

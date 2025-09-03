@@ -16,6 +16,7 @@ class Product extends Model
     protected static string $table = 'sp_products';
     
     protected static array $fillable = [
+        'id',
         'name',
         'description', 
         'sku',
@@ -33,7 +34,9 @@ class Product extends Model
         'location',
         'brand',
         'model',
-        'status'
+        'status',
+        'created_at',
+        'updated_at'
     ];
 
     protected static array $casts = [

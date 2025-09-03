@@ -16,6 +16,7 @@ class Client extends Model
     protected static string $table = 'sp_clients';
     
     protected static array $fillable = [
+        'id',
         'company_name',
         'contact_person',
         'email',
@@ -30,7 +31,9 @@ class Client extends Model
         'payment_terms',
         'discount_percentage',
         'notes',
-        'status'
+        'status',
+        'created_at',
+        'updated_at'
     ];
 
     protected static array $casts = [
