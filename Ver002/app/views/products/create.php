@@ -5,13 +5,13 @@
  * Layout: Uses app layout with professional product creation interface
  */
 
-$this->layout('layouts/app', [
-    'title' => $page_title ?? t('products.create_product'),
-    'active_nav' => 'products'
-]);
+$page_title = $page_title ?? t('products.create_product');
+$active_nav = 'products';
+ob_start();
 
-$currentUser = $this->getCurrentUser();
-$canCreate = $this->hasRole(['admin', 'manager', 'warehouse']);
+// Get current user from passed data
+$currentUser = $current_user ?? null;
+$canCreate = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'warehouse']);
 ?>
 
 <div class="container-fluid">
@@ -581,3 +581,8 @@ function previewProduct() {
     showAlert('info', '<?= t('products.preview_feature_coming_soon') ?>');
 }
 </script>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/app.php';
+?>

@@ -79,7 +79,8 @@ class ProductController extends Controller
             'product' => new Product(),
             'categories' => $categories,
             'units' => $units,
-            'page_title' => t('products.add_product')
+            'page_title' => t('products.add_product'),
+            'current_user' => $this->getCurrentUser()
         ]);
     }
 
@@ -173,7 +174,8 @@ class ProductController extends Controller
         $this->view('products/show', [
             'product' => $product,
             'stock_movements' => $stockMovements,
-            'page_title' => $product->name
+            'page_title' => $product->name,
+            'current_user' => $this->getCurrentUser()
         ]);
     }
 
@@ -196,7 +198,8 @@ class ProductController extends Controller
             'product' => $product,
             'categories' => $categories,
             'units' => $units,
-            'page_title' => t('common.edit') . ' - ' . $product->name
+            'page_title' => t('common.edit') . ' - ' . $product->name,
+            'current_user' => $this->getCurrentUser()
         ]);
     }
 
@@ -317,6 +320,30 @@ class ProductController extends Controller
         }
     }
 
+    public function stock(array $params): void
+    {
+        $this->requireAuth();
+        
+        $id = $params['id'] ?? 0;
+        $product = Product::find($id);
+        
+        if (!$product) {
+            $this->setFlash('error', t('messages.error.not_found'));
+            $this->redirect('/products');
+        }
+        
+        // Get stock movements (last 20)
+        $stockMovements = $product->stockMovements();
+        $stockMovements = array_slice(array_reverse($stockMovements), 0, 20);
+        
+        $this->view('products/stock', [
+            'product' => $product,
+            'stock_movements' => $stockMovements,
+            'page_title' => t('products.manage_stock') . ' - ' . $product->name,
+            'current_user' => $this->getCurrentUser()
+        ]);
+    }
+    
     public function adjustStock(array $params): void
     {
         $this->requireAuth();

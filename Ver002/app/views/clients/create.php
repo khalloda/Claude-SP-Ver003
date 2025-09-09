@@ -5,13 +5,13 @@
  * Layout: Uses app layout with professional client creation interface
  */
 
-$this->layout('layouts/app', [
-    'title' => $page_title ?? t('clients.create_client'),
-    'active_nav' => 'clients'
-]);
+$page_title = $page_title ?? t('clients.create_client');
+$active_nav = 'clients';
+ob_start();
 
-$currentUser = $this->getCurrentUser();
-$canCreate = $this->hasRole(['admin', 'manager', 'sales']);
+// Get current user from passed data
+$currentUser = $current_user ?? null;
+$canCreate = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'sales']);
 ?>
 
 <div class="container-fluid">
@@ -559,3 +559,8 @@ function resetForm() {
     }
 }
 </script>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/app.php';
+?>

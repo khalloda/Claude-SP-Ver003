@@ -5,13 +5,13 @@
  * Layout: Uses app layout with professional product editing interface
  */
 
-$this->layout('layouts/app', [
-    'title' => $page_title ?? t('products.edit_product'),
-    'active_nav' => 'products'
-]);
+$page_title = $page_title ?? t('products.edit_product');
+$active_nav = 'products';
+ob_start();
 
-$currentUser = $this->getCurrentUser();
-$canEdit = $this->hasRole(['admin', 'manager', 'warehouse']);
+// Get current user from passed data
+$currentUser = $current_user ?? null;
+$canEdit = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'warehouse']);
 ?>
 
 <div class="container-fluid">
@@ -623,3 +623,8 @@ document.querySelector('input[name="main_image"]').addEventListener('change', fu
     }
 });
 </script>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/app.php';
+?>

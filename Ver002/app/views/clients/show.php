@@ -5,14 +5,14 @@
  * Layout: Uses app layout with comprehensive client information
  */
 
-$this->layout('layouts/app', [
-    'title' => $page_title ?? t('clients.client_profile'),
-    'active_nav' => 'clients'
-]);
+$page_title = $page_title ?? t('clients.client_profile');
+$active_nav = 'clients';
+ob_start();
 
-$currentUser = $this->getCurrentUser();
-$canEdit = $this->hasRole(['admin', 'manager', 'sales']);
-$canDelete = $this->hasRole(['admin', 'manager']);
+// Get current user from passed data
+$currentUser = $current_user ?? null;
+$canEdit = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'sales']);
+$canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager']);
 ?>
 
 <div class="container-fluid">
@@ -404,3 +404,8 @@ $canDelete = $this->hasRole(['admin', 'manager']);
         </div>
     </div>
 </div>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/app.php';
+?>

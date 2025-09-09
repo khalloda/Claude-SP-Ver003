@@ -51,7 +51,8 @@ class ClientController extends Controller
 
         $this->view('clients/create', [
             'page_title' => t('clients.add_client'),
-            'client' => new Client()
+            'client' => new Client(),
+            'current_user' => $this->getCurrentUser()
         ]);
     }
 
@@ -131,7 +132,8 @@ class ClientController extends Controller
         $this->view('clients/show', [
             'client' => $client,
             'stats' => $stats,
-            'page_title' => $client->getDisplayName()
+            'page_title' => $client->getDisplayName(),
+            'current_user' => $this->getCurrentUser()
         ]);
     }
 
@@ -149,7 +151,8 @@ class ClientController extends Controller
 
         $this->view('clients/edit', [
             'client' => $client,
-            'page_title' => t('common.edit') . ' - ' . $client->getDisplayName()
+            'page_title' => t('common.edit') . ' - ' . $client->getDisplayName(),
+            'current_user' => $this->getCurrentUser()
         ]);
     }
 

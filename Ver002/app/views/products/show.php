@@ -5,14 +5,14 @@
  * Layout: Uses app layout with comprehensive product display
  */
 
-$this->layout('layouts/app', [
-    'title' => $page_title ?? t('products.product_details'),
-    'active_nav' => 'products'
-]);
+$page_title = $page_title ?? t('products.product_details');
+$active_nav = 'products';
+ob_start();
 
-$currentUser = $this->getCurrentUser();
-$canEdit = $this->hasRole(['admin', 'manager', 'inventory']);
-$canDelete = $this->hasRole(['admin', 'manager']);
+// Get current user from passed data
+$currentUser = $current_user ?? null;
+$canEdit = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager', 'inventory']);
+$canDelete = $currentUser && in_array($currentUser['role'] ?? '', ['admin', 'manager']);
 ?>
 
 <div class="container-fluid">
@@ -506,3 +506,8 @@ $canDelete = $this->hasRole(['admin', 'manager']);
         </div>
     </div>
 </div>
+
+<?php
+$content = ob_get_clean();
+include __DIR__ . '/../layouts/app.php';
+?>

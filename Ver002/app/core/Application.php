@@ -75,6 +75,11 @@ class Application
             $this->addResourceRoutes($router, 'clients', 'ClientController');
             $this->addResourceRoutes($router, 'suppliers', 'SupplierController');
             $this->addResourceRoutes($router, 'products', 'ProductController');
+            
+            // Additional product routes
+            $router->get('/products/{id}/stock', 'ProductController@stock');
+            $router->post('/products/{id}/stock', 'ProductController@adjustStock', ['middleware' => ['csrf']]);
+            
             $this->addResourceRoutes($router, 'warehouses', 'WarehouseController');
             $this->addResourceRoutes($router, 'quotes', 'QuoteController');
             $this->addResourceRoutes($router, 'salesorders', 'SalesorderController');
